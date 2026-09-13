@@ -3,7 +3,7 @@ import { CiDeliveryTruck } from "react-icons/ci";
 
 const CardSection = () => {
   return (
-    <div className="mt-10">
+    <div className="mt-10 rounded-xl shadow-[0_-10px_20px_rgba(0,0,0,0.15),0_10px_20px_rgba(0,0,0,0.15)]">
       {/* Section Title */}
       <h2 className="mb-6 ml-4 text-2xl font-bold">How It Works</h2>
 

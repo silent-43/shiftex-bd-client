@@ -9,7 +9,7 @@ import deliveryManImg from "../../../assets/big-deliveryman.png";
 
 const Banner = () => {
   return (
-    <div className="flex w-full h-[400px] mt-10">
+    <div className="flex w-full h-[400px] mt-10 shadow-xl">
       {/* Carousel - 60% */}
       <div className="w-[60%] h-full">
         <Carousel

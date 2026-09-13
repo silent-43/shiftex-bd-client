@@ -49,7 +49,7 @@ const cards = [
 
 const BigSectionCard = () => {
   return (
-    <section className="mt-16 rounded-2xl bg-success py-24">
+    <section className="mt-16 rounded-2xl bg-success py-24 shadow-[0_-10px_20px_rgba(0,0,0,0.15),0_10px_20px_rgba(0,0,0,0.15)]">
       <div className="mx-auto max-w-7xl px-4">
         {/* Section Heading */}
         <div className="mb-14 text-center text-black">
