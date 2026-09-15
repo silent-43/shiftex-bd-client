@@ -17,7 +17,7 @@ const NavBar = () => {
 
       <li>
         <NavLink
-          to=""
+          to="coverage"
           className="rounded-lg px-4 py-2 text-[15px] font-semibold text-[#365b63] transition-all duration-300 hover:bg-[#57909a] hover:text-white hover:shadow-md hover:-translate-y-1"
         >
           Coverage
