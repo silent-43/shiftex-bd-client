@@ -1,11 +1,28 @@
 import React from "react";
 import Logo from "../../../components/Logo/Logo";
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 import { FiArrowUpRight } from "react-icons/fi";
+import useAuth from "../../../hooks/useAuth";
+import toast, { Toaster } from "react-hot-toast";
 
 const NavBar = () => {
+  const { user, logOut } = useAuth();
+
+  const handleLogOut = () => {
+    logOut()
+      .then((result) => {
+        console.log(result);
+        toast.success("Logged out successfully!");
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("Logout failed. Please try again.");
+      });
+  };
+
   const links = (
     <>
+      <Toaster position="top-right" />
       <li>
         <NavLink
           to=""
@@ -26,7 +43,7 @@ const NavBar = () => {
 
       <li>
         <NavLink
-          to=""
+          to="/about-us"
           className="rounded-lg px-4 py-2 text-[15px] font-semibold text-[#365b63] transition-all duration-300 hover:bg-[#57909a] hover:text-white hover:shadow-md hover:-translate-y-1"
         >
           About Us
@@ -53,7 +70,7 @@ const NavBar = () => {
 
       <li>
         <NavLink
-          to=""
+          to="/contact"
           className="rounded-lg px-4 py-2 text-[15px] font-semibold text-[#365b63] transition-all duration-300 hover:bg-[#57909a] hover:text-white hover:shadow-md hover:-translate-y-1"
         >
           Contact
@@ -92,9 +109,7 @@ const NavBar = () => {
           </ul>
         </div>
 
-        <a className="btn btn-ghost text-xl">
-          <Logo />
-        </a>
+        <Logo />
       </div>
 
       <div className="navbar-center hidden lg:flex">
@@ -102,14 +117,29 @@ const NavBar = () => {
       </div>
 
       <div className="navbar-end flex items-center gap-3">
-        <a className="btn rounded-lg px-5 font-bold text-[#365b63] transition-all duration-300 hover:-translate-y-1 hover:bg-[#57909a] hover:text-white hover:shadow-md">
-          Sign In
-        </a>
+        {user ? (
+          <a
+            onClick={handleLogOut}
+            className="btn rounded-lg px-5 font-bold text-[#365b63] transition-all duration-300 hover:-translate-y-1 hover:bg-[#57909a] hover:text-white hover:shadow-md"
+          >
+            Log Out
+          </a>
+        ) : (
+          <Link
+            to="/login"
+            className="btn rounded-lg px-5 font-bold text-[#365b63] transition-all duration-300 hover:-translate-y-1 hover:bg-[#57909a] hover:text-white hover:shadow-md"
+          >
+            Log in
+          </Link>
+        )}
 
         <div className="group flex items-center">
-          <a className="btn rounded-l-lg rounded-r-none px-5 font-bold text-[#365b63] transition-all duration-300 hover:-translate-y-1 hover:bg-[#57909a] hover:text-white hover:shadow-md">
-            Sign Up
-          </a>
+          <Link
+            to="/rider"
+            className="btn rounded-l-lg rounded-r-none px-5 font-bold text-[#365b63] transition-all duration-300 hover:-translate-y-1 hover:bg-[#57909a] hover:text-white hover:shadow-md"
+          >
+            Be a rider
+          </Link>
 
           <span className="flex h-10 w-10 items-center justify-center rounded-r-lg bg-[#09f749] text-white transition-all duration-300 group-hover:-translate-y-1 group-hover:bg-[#07d63f] group-hover:shadow-md">
             <FiArrowUpRight

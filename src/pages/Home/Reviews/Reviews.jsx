@@ -6,7 +6,7 @@ import customerTop from "../../../assets/customer-top.png";
 
 const Reviews = ({ reviewsPromise }) => {
   const reviews = use(reviewsPromise);
-  console.log(reviews);
+  // console.log(reviews);
   return (
     <div className="my-24 shadow-[0_-10px_20px_rgba(0,0,0,0.15),0_10px_20px_rgba(0,0,0,0.15)] rounded-2xl">
       <div className="text-center mb-15">
