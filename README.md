@@ -16,9 +16,42 @@ A modern full-stack parcel delivery and management platform designed to simplify
 
 ShiftexBD is a full-stack parcel delivery management system that connects customers, riders, and administrators through a role-based workflow.
 
-The platform is designed to provide a smooth and modern parcel delivery experience with features such as user authentication, parcel booking, delivery charge calculation, parcel tracking, service coverage information, customer support, and more.
+The platform is designed to provide a smooth and modern parcel delivery experience with features such as user authentication, parcel booking, automatic delivery charge calculation, parcel tracking, service coverage information, customer support, payment integration, dashboards, and more.
 
 The project follows a real-world courier and parcel management workflow and is built with a responsive user interface for different screen sizes.
+
+---
+
+## 🛠️ Technologies Used
+
+### Frontend
+
+- React.js
+- React Router
+- Tailwind CSS
+- DaisyUI
+- React Icons
+- React Responsive Carousel
+- React Leaflet
+- TanStack React Query
+- Firebase Authentication
+- React Hook Form
+- SweetAlert2
+- EmailJS
+
+### Backend
+
+- Node.js
+- Express.js
+- MongoDB
+- Firebase Admin
+- REST API
+
+### Deployment
+
+- Firebase Hosting
+- Vercel
+- Render
 
 ---
 
@@ -33,6 +66,9 @@ The project follows a real-world courier and parcel management workflow and is b
 - Authentication state handling
 - User profile information
 - Logout functionality
+- Password reset functionality
+- Authentication-based navigation
+- Role-based access structure
 
 ---
 
@@ -42,12 +78,17 @@ The project follows a real-world courier and parcel management workflow and is b
 - Firebase authentication
 - Google Sign-In
 - Book a parcel
+- Send Parcel page
 - Automatic delivery charge calculation
-- Parcel tracking
-- View parcel-related information
+- Parcel type selection
+- Delivery location selection
+- Parcel information management
 - Personal dashboard
+- My Parcels section
+- Parcel-related information
+- Parcel tracking structure
 - Review and rating functionality
-- Access protected pages after authentication
+- Protected dashboard routes
 
 ---
 
@@ -60,6 +101,8 @@ The project follows a real-world courier and parcel management workflow and is b
 - Rider management structure
 - Warehouse management structure
 - Delivery operation management structure
+- Rider assignment workflow
+- Parcel status management structure
 
 ---
 
@@ -73,6 +116,46 @@ The project follows a real-world courier and parcel management workflow and is b
 - OTP-based delivery confirmation workflow
 - Delivery history structure
 - Earnings and commission workflow
+
+---
+
+## 📊 Dashboard
+
+ShiftexBD includes a dedicated dashboard system for managing user-specific activities.
+
+### Dashboard Features
+
+- Responsive dashboard layout
+- Sidebar navigation
+- Drawer-based responsive navigation
+- Dashboard home
+- My Parcels
+- Settings structure
+- Role-based dashboard workflow
+- Protected dashboard routes
+
+The dashboard structure is designed to support separate workflows for **Users, Admins, and Riders**.
+
+---
+
+## 📦 Send Parcel
+
+The Send Parcel section allows users to create and manage parcel delivery requests.
+
+### Features
+
+- Sender information
+- Receiver information
+- Parcel type
+- Parcel weight
+- Delivery location
+- Delivery charge calculation
+- Parcel booking workflow
+- Form validation
+- Payment workflow integration structure
+- Responsive form layout
+
+Delivery charges are calculated automatically based on parcel type, weight, and delivery location.
 
 ---
 
@@ -127,8 +210,9 @@ ShiftexBD includes an interactive delivery coverage map powered by **React Leafl
 - Popup information for service centers
 - District search functionality
 - Map navigation using `flyTo()`
-- Service center data loaded dynamically
-- Coverage information across Bangladesh districts
+- Dynamically loaded service center data
+- Coverage information across 64 districts
+- Responsive map layout
 
 Users can search for a district and quickly navigate to the corresponding location on the map.
 
@@ -149,6 +233,42 @@ The About Us page introduces the ShiftexBD platform and its services.
 - Responsive design
 
 The Learn More sections open detailed information inside a popup, keeping users on the same page.
+
+---
+
+## 💰 Pricing Page
+
+ShiftexBD includes a dedicated pricing page that explains delivery charges clearly.
+
+### Pricing Structure
+
+#### Document
+
+| Delivery Type           | Charge |
+| ----------------------- | -----: |
+| Within City             |    ৳60 |
+| Outside City / District |    ৳80 |
+
+#### Non-Document — Up to 3kg
+
+| Delivery Type           | Charge |
+| ----------------------- | -----: |
+| Within City             |   ৳110 |
+| Outside City / District |   ৳150 |
+
+#### Non-Document — Above 3kg
+
+- Additional **৳40 per kg**
+- Outside-city deliveries include an additional **৳40 charge**
+
+The pricing page also includes:
+
+- Pricing cards
+- Complete pricing table
+- Delivery charge explanation
+- Example calculations
+- Important pricing information
+- Responsive design
 
 ---
 
@@ -202,43 +322,25 @@ ShiftexBD uses protected/private routes for authenticated users.
 
 Unauthenticated users cannot directly access protected pages and are redirected to the appropriate authentication flow.
 
-The project uses React Router for client-side routing.
+The project uses **React Router** for client-side routing.
+
+Protected areas include:
+
+- Dashboard
+- My Parcels
+- Send Parcel
+- User-specific features
 
 ---
 
-## 💰 Delivery Pricing
-
-The platform uses an automatic pricing system based on parcel type, weight, and delivery location.
-
-### Document
-
-| Delivery Type | Charge |
-| ------------- | -----: |
-| Within City   |    ৳60 |
-| Outside City  |    ৳80 |
-
-### Non-Document
-
-For parcels up to 3kg:
-
-| Delivery Type | Charge |
-| ------------- | -----: |
-| Within City   |   ৳110 |
-| Outside City  |   ৳150 |
-
-For parcels above 3kg:
-
-- Additional **৳40 per kg**
-- Outside-city deliveries include an additional **৳40 charge**
-
----
-
-## 📦 Parcel Delivery Workflow
+## 🔄 Parcel Delivery Workflow
 
 ```text
 User
   ↓
 Book Parcel
+  ↓
+Calculate Delivery Charge
   ↓
 Payment
   ↓
