@@ -34,10 +34,19 @@ const NavBar = () => {
 
       <li>
         <NavLink
-          to="coverage"
+          to="/coverage"
           className="rounded-lg px-4 py-2 text-[15px] font-semibold text-[#365b63] transition-all duration-300 hover:bg-[#57909a] hover:text-white hover:shadow-md hover:-translate-y-1"
         >
           Coverage
+        </NavLink>
+      </li>
+
+      <li>
+        <NavLink
+          to="/send-parcel"
+          className="rounded-lg px-4 py-2 text-[15px] font-semibold text-[#365b63] transition-all duration-300 hover:bg-[#57909a] hover:text-white hover:shadow-md hover:-translate-y-1"
+        >
+          Send Parcel
         </NavLink>
       </li>
 
@@ -52,22 +61,12 @@ const NavBar = () => {
 
       <li>
         <NavLink
-          to=""
+          to="/pricing"
           className="rounded-lg px-4 py-2 text-[15px] font-semibold text-[#365b63] transition-all duration-300 hover:bg-[#57909a] hover:text-white hover:shadow-md hover:-translate-y-1"
         >
           Pricing
         </NavLink>
       </li>
-
-      <li>
-        <NavLink
-          to=""
-          className="rounded-lg px-4 py-2 text-[15px] font-semibold text-[#365b63] transition-all duration-300 hover:bg-[#57909a] hover:text-white hover:shadow-md hover:-translate-y-1"
-        >
-          Blog
-        </NavLink>
-      </li>
-
       <li>
         <NavLink
           to="/contact"
@@ -76,6 +75,19 @@ const NavBar = () => {
           Contact
         </NavLink>
       </li>
+
+      {user && (
+        <>
+          <li>
+            <NavLink
+              to="/dashboard/my-parcels"
+              className=" rounded-lg px-4 py-2 text-[15px] font-semibold text-[#365b63] transition-all duration-300 hover:bg-[#57909a] hover:text-white hover:shadow-md hover:-translate-y-1"
+            >
+              My Parcels
+            </NavLink>
+          </li>
+        </>
+      )}
     </>
   );
 

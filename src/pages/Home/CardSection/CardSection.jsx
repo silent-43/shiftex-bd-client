@@ -5,10 +5,12 @@ const CardSection = () => {
   return (
     <div className="mt-10 rounded-xl shadow-[0_-10px_20px_rgba(0,0,0,0.15),0_10px_20px_rgba(0,0,0,0.15)]">
       {/* Section Title */}
-      <h2 className="mb-6 ml-4 text-2xl font-bold">How It Works</h2>
+      <h2 className="mb-6 ml-4 pt-4 text-2xl font-bold sm:ml-5 md:ml-6">
+        How It Works
+      </h2>
 
       {/* Cards */}
-      <div className="grid grid-cols-4 gap-5">
+      <div className="grid grid-cols-1 gap-5 px-4 pb-6 sm:grid-cols-2 md:px-5 lg:grid-cols-4 lg:px-6">
         {/* Card 1 */}
         <div className="group card bg-base-300 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:bg-[#60A5FA] hover:shadow-xl">
           <div className="card-body">
