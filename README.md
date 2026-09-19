@@ -1,28 +1,138 @@
 # ShiftexBD
 
-A modern full-stack parcel delivery and management platform designed to simplify parcel booking, delivery operations, rider management, tracking, payment, and customer support.
-
----
+A modern full-stack parcel delivery platform for parcel booking, payment, tracking, and delivery management.
 
 ## 🌐 Live Project
 
 - **Live Website:** https://shiftex-bd.web.app
+- **Backend API:** https://shiftex-bd-server.onrender.com
 - **Client Repository:** https://github.com/silent-43/shiftex-bd-client
-- **Server Repository:** Coming Soon
+- **Server Repository:** https://github.com/silent-43/shiftex-bd-server
 
 ---
 
-## 📌 About The Project
+## ✨ Features
 
-ShiftexBD is a full-stack parcel delivery management system that connects customers, riders, and administrators through a role-based workflow.
+### 🔐 Authentication
 
-The platform is designed to provide a smooth and modern parcel delivery experience with features such as user authentication, parcel booking, automatic delivery charge calculation, parcel tracking, service coverage information, customer support, payment integration, dashboards, and more.
+- Email & Password Authentication
+- Google Sign-In
+- Password Reset
+- User Profile
+- Logout
+- Protected Routes
+- Role-Based Access Structure
 
-The project follows a real-world courier and parcel management workflow and is built with a responsive user interface for different screen sizes.
+### 📦 Parcel Management
+
+- Send Parcel
+- Sender & Receiver Information
+- Parcel Type & Weight
+- Delivery Location
+- Automatic Delivery Charge Calculation
+- Parcel Booking
+- My Parcels
+- Parcel Details
+- Parcel Status
+- Tracking ID
+
+### 💳 Payment
+
+- Stripe Payment Integration
+- Secure Checkout
+- Payment Verification
+- Payment Status
+- Transaction ID
+- Payment Records
+- Automatic Tracking ID Generation After Successful Payment
+
+### 📊 Dashboard
+
+- Responsive Dashboard Layout
+- Sidebar Navigation
+- Drawer-Based Navigation
+- Dashboard Home
+- My Parcels
+- Role-Based Dashboard Structure
+- User, Admin & Rider Workflow Structure
+
+### 👨‍💼 Admin
+
+- Admin Dashboard Structure
+- Parcel Management
+- Rider Management
+- Rider Assignment
+- Parcel Status Management
+- Warehouse Management Workflow
+- Delivery Operation Workflow
+
+### 🚴 Rider
+
+- Rider Dashboard Structure
+- Assigned Parcel Workflow
+- Parcel Pickup
+- Parcel Status Update
+- Warehouse Handoff
+- OTP-Based Delivery Confirmation
+- Delivery History
+- Earnings Workflow
+
+### 📍 Coverage
+
+- Interactive Bangladesh Map
+- React Leaflet Integration
+- Service Center Markers
+- District Coverage Information
+- Service Center Popups
+- District Search
+- Map Navigation with `flyTo()`
+- Coverage Across 64 Districts
+
+### 🏠 Home Page
+
+- Responsive Navbar
+- ShiftexBD Branding
+- Authentication Buttons
+- Hero Carousel
+- Deliveryman Section
+- How It Works
+- Why Choose Us
+- FAQ
+- Call-to-Action
+- Responsive Footer
+
+### ℹ️ About Us
+
+- Company Introduction
+- Service Information
+- Feature Cards
+- Why Choose ShiftexBD
+- Interactive Learn More Modal
+- Detailed Information Without Page Navigation
+
+### 💰 Pricing
+
+- Document Delivery Pricing
+- Non-Document Delivery Pricing
+- Weight-Based Pricing
+- Within-City & Outside-City Charges
+- Pricing Cards
+- Pricing Table
+- Example Calculations
+
+### 📞 Contact Us
+
+- Contact Information
+- Contact Form
+- Form Validation
+- EmailJS Integration
+- SweetAlert2 Notifications
+- FAQ & Support Information
+- Responsive Design
 
 ---
 
-## 🛠️ Technologies Used
+## 🛠️ Technologies
 
 ### Frontend
 
@@ -34,6 +144,7 @@ The project follows a real-world courier and parcel management workflow and is b
 - React Responsive Carousel
 - React Leaflet
 - TanStack React Query
+- Axios
 - Firebase Authentication
 - React Hook Form
 - SweetAlert2
@@ -46,294 +157,40 @@ The project follows a real-world courier and parcel management workflow and is b
 - MongoDB
 - Firebase Admin
 - REST API
+- Stripe
+- Crypto
 
 ### Deployment
 
 - Firebase Hosting
-- Vercel
 - Render
 
 ---
 
-## ✨ Current Features
+## 💰 Delivery Pricing
 
-### 🔐 Authentication
-
-- User registration and login
-- Firebase Authentication
-- Google Sign-In
-- Protected/private routes
-- Authentication state handling
-- User profile information
-- Logout functionality
-- Password reset functionality
-- Authentication-based navigation
-- Role-based access structure
-
----
-
-### 👤 User
-
-- User registration and authentication
-- Firebase authentication
-- Google Sign-In
-- Book a parcel
-- Send Parcel page
-- Automatic delivery charge calculation
-- Parcel type selection
-- Delivery location selection
-- Parcel information management
-- Personal dashboard
-- My Parcels section
-- Parcel-related information
-- Parcel tracking structure
-- Review and rating functionality
-- Protected dashboard routes
-
----
-
-### 🛠️ Admin
-
-- Admin dashboard structure
-- Role-based access control structure
-- Admin-specific workflow planning
-- Parcel management structure
-- Rider management structure
-- Warehouse management structure
-- Delivery operation management structure
-- Rider assignment workflow
-- Parcel status management structure
-
----
-
-### 🚴 Rider
-
-- Rider dashboard structure
-- Assigned delivery workflow
-- Parcel pickup workflow
-- Parcel status update workflow
-- Warehouse handoff workflow
-- OTP-based delivery confirmation workflow
-- Delivery history structure
-- Earnings and commission workflow
-
----
-
-## 📊 Dashboard
-
-ShiftexBD includes a dedicated dashboard system for managing user-specific activities.
-
-### Dashboard Features
-
-- Responsive dashboard layout
-- Sidebar navigation
-- Drawer-based responsive navigation
-- Dashboard home
-- My Parcels
-- Settings structure
-- Role-based dashboard workflow
-- Protected dashboard routes
-
-The dashboard structure is designed to support separate workflows for **Users, Admins, and Riders**.
-
----
-
-## 📦 Send Parcel
-
-The Send Parcel section allows users to create and manage parcel delivery requests.
-
-### Features
-
-- Sender information
-- Receiver information
-- Parcel type
-- Parcel weight
-- Delivery location
-- Delivery charge calculation
-- Parcel booking workflow
-- Form validation
-- Payment workflow integration structure
-- Responsive form layout
-
-Delivery charges are calculated automatically based on parcel type, weight, and delivery location.
-
----
-
-## 🏠 Home Page
-
-The ShiftexBD homepage includes:
-
-- Responsive navigation bar
-- ShiftexBD branding and logo
-- Sign In and Sign Up buttons
-- Hero banner carousel
-- Deliveryman promotional section
-- How It Works section
-- Why Choose Us section
-- FAQ section
-- Call-to-action sections
-- Responsive footer
-
-### How It Works
-
-The platform explains the parcel delivery process through a simple step-by-step interface.
-
-- Booking Pick & Drop
-- Parcel Processing
-- Delivery Tracking
-- Successful Delivery
-
----
-
-## 💡 Why Choose ShiftexBD
-
-The homepage highlights important service benefits such as:
-
-- Real-Time Tracking
-- Fast Delivery
-- Safe & Secure Delivery
-- On-Time Delivery
-- Parcel Management
-- Customer Support
-
----
-
-## 📍 Coverage Page
-
-ShiftexBD includes an interactive delivery coverage map powered by **React Leaflet**.
-
-### Coverage Features
-
-- Interactive Bangladesh map
-- Service center markers
-- Coverage information for districts
-- Popup information for service centers
-- District search functionality
-- Map navigation using `flyTo()`
-- Dynamically loaded service center data
-- Coverage information across 64 districts
-- Responsive map layout
-
-Users can search for a district and quickly navigate to the corresponding location on the map.
-
----
-
-## ℹ️ About Us Page
-
-The About Us page introduces the ShiftexBD platform and its services.
-
-### Features
-
-- Company introduction
-- Service information
-- Why choose ShiftexBD
-- Feature cards
-- Interactive "Learn More" modal/popup
-- Detailed information without navigating to another page
-- Responsive design
-
-The Learn More sections open detailed information inside a popup, keeping users on the same page.
-
----
-
-## 💰 Pricing Page
-
-ShiftexBD includes a dedicated pricing page that explains delivery charges clearly.
-
-### Pricing Structure
-
-#### Document
+### Document
 
 | Delivery Type           | Charge |
 | ----------------------- | -----: |
 | Within City             |    ৳60 |
 | Outside City / District |    ৳80 |
 
-#### Non-Document — Up to 3kg
+### Non-Document — Up to 3kg
 
 | Delivery Type           | Charge |
 | ----------------------- | -----: |
 | Within City             |   ৳110 |
 | Outside City / District |   ৳150 |
 
-#### Non-Document — Above 3kg
+### Above 3kg
 
 - Additional **৳40 per kg**
 - Outside-city deliveries include an additional **৳40 charge**
 
-The pricing page also includes:
-
-- Pricing cards
-- Complete pricing table
-- Delivery charge explanation
-- Example calculations
-- Important pricing information
-- Responsive design
-
 ---
 
-## 📞 Contact Us Page
-
-A complete Contact Us page has been implemented to allow users to communicate with ShiftexBD.
-
-### Contact Page Features
-
-- Contact information cards
-- Phone information
-- Email information
-- Location information
-- Business hours
-- Contact form
-- Form validation
-- Email sending functionality
-- Success/error notifications
-- FAQ/help section
-- Customer support information
-- Responsive design
-
-### Form Validation
-
-The contact form validates:
-
-- Name
-- Email
-- Bangladeshi phone number
-- Subject
-- Message
-
-Form validation is implemented using **React Hook Form**.
-
-### Email Integration
-
-The contact form uses **EmailJS** to send submitted messages directly to the configured email address.
-
-### Notifications
-
-**SweetAlert2** is used for:
-
-- Successful message submission
-- Error notifications
-
----
-
-## 🔒 Protected Routes
-
-ShiftexBD uses protected/private routes for authenticated users.
-
-Unauthenticated users cannot directly access protected pages and are redirected to the appropriate authentication flow.
-
-The project uses **React Router** for client-side routing.
-
-Protected areas include:
-
-- Dashboard
-- My Parcels
-- Send Parcel
-- User-specific features
-
----
-
-## 🔄 Parcel Delivery Workflow
+## 🔄 Parcel Workflow
 
 ```text
 User
@@ -342,7 +199,11 @@ Book Parcel
   ↓
 Calculate Delivery Charge
   ↓
-Payment
+Stripe Payment
+  ↓
+Payment Verification
+  ↓
+Generate Tracking ID
   ↓
 Admin Assignment
   ↓

@@ -93,7 +93,10 @@ const MyParcels = () => {
                   ) : (
                     <button
                       onClick={() => handlePayment(parcel)}
-                      className="btn btn-success font-bold text-black"
+                      className="btn btn-success font-bold text-black
+             transition-all duration-300 ease-in-out
+             hover:bg-primary hover:text-secondary hover:scale-105 hover:shadow-xl
+             active:scale-90 active:shadow-md"
                     >
                       Pay
                     </button>

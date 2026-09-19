@@ -2,6 +2,7 @@ import React from "react";
 import { CiDeliveryTruck } from "react-icons/ci";
 import { FaTruck } from "react-icons/fa";
 import { Link, NavLink, Outlet } from "react-router";
+import { CgSmartHomeWashMachine } from "react-icons/cg";
 
 const DashboardLayout = () => {
   return (
@@ -17,7 +18,7 @@ const DashboardLayout = () => {
           <label
             htmlFor="my-drawer-4"
             aria-label="open sidebar"
-            className="btn btn-square btn-ghost drawer-button"
+            className="btn btn-ghost drawer-button flex items-center gap-1"
           >
             {/* Sidebar toggle icon */}
             <svg
@@ -34,8 +35,16 @@ const DashboardLayout = () => {
               <path d="M9 4v16"></path>
               <path d="M14 10l2 2l-2 2"></path>
             </svg>
+            <span className="font-bold">Menu</span>
           </label>
-          <div className="px-4">ShiftexBD Dashboard</div>
+          <div className="px-4 text-secondary font-bold">
+            <Link
+              to="/dashboard/dashboard-home"
+              className="hover:text-success transition-colors"
+            >
+              ShiftexBD Dashboard
+            </Link>
+          </div>
         </nav>
         <Outlet></Outlet>
         {/* Page content here */}
@@ -72,6 +81,19 @@ const DashboardLayout = () => {
                   <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                 </svg>
                 <span className="is-drawer-close:hidden">Homepage</span>
+              </Link>
+            </li>
+
+            {/* dashboard */}
+            <li>
+              <Link
+                to="/dashboard/dashboard-home"
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="Dashboard"
+              >
+                {/* dashboard icon */}
+                <CgSmartHomeWashMachine />
+                <span className="is-drawer-close:hidden">Dashboard</span>
               </Link>
             </li>
 
