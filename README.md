@@ -39,20 +39,24 @@ A modern full-stack parcel delivery platform for parcel booking, payment, tracki
 ### 💳 Payment
 
 - Stripe Payment Integration
-- Secure Checkout
+- BDT (৳) Currency Support
+- Secure Stripe Checkout
 - Payment Verification
 - Payment Status
 - Transaction ID
 - Payment Records
 - Automatic Tracking ID Generation After Successful Payment
+- Payment Amount Stored in BDT in MongoDB
+- Stripe Amount Converted from BDT to Poisha Automatically
 
 ### 📊 Dashboard
 
 - Responsive Dashboard Layout
-- Sidebar Navigation
-- Drawer-Based Navigation
+- Collapsible Sidebar Navigation
+- Mobile Drawer Navigation
 - Dashboard Home
 - My Parcels
+- Payment History
 - Role-Based Dashboard Structure
 - User, Admin & Rider Workflow Structure
 
@@ -119,6 +123,7 @@ A modern full-stack parcel delivery platform for parcel booking, payment, tracki
 - Pricing Cards
 - Pricing Table
 - Example Calculations
+- BDT Currency Support
 
 ### 📞 Contact Us
 
@@ -169,51 +174,67 @@ A modern full-stack parcel delivery platform for parcel booking, payment, tracki
 
 ## 💰 Delivery Pricing
 
-### Document
+All delivery charges are calculated and displayed in **Bangladeshi Taka (BDT / ৳)**.
+
+### 📄 Document
 
 | Delivery Type           | Charge |
 | ----------------------- | -----: |
 | Within City             |    ৳60 |
 | Outside City / District |    ৳80 |
 
-### Non-Document — Up to 3kg
+### 📦 Non-Document — Up to 3kg
 
 | Delivery Type           | Charge |
 | ----------------------- | -----: |
 | Within City             |   ৳110 |
 | Outside City / District |   ৳150 |
 
-### Above 3kg
+### ⚖️ Non-Document — Above 3kg
 
-- Additional **৳40 per kg**
-- Outside-city deliveries include an additional **৳40 charge**
+For parcels weighing more than 3kg:
+
+- Additional **৳40 per kg** is added for the extra weight.
+- Outside-city deliveries include an additional **৳40 charge**.
+
+### 🧮 Pricing Examples
+
+#### Document
+
+- Within City → **৳60**
+- Outside City → **৳80**
+
+#### Non-Document — 3kg or Less
+
+- Within City → **৳110**
+- Outside City → **৳150**
+
+#### Non-Document — Above 3kg
+
+For example, a 5kg parcel:
+
+- Base charge = ৳110
+- Extra weight = 5kg - 3kg = 2kg
+- Extra weight charge = 2 × ৳40 = ৳80
+- Total within-city charge = **৳190**
+
+For outside-city delivery:
+
+- Base charge = ৳150
+- Extra weight charge = ৳80
+- Total outside-city charge = **৳230**
 
 ---
 
-## 🔄 Parcel Workflow
+## 💳 Payment Amount Handling
+
+ShiftexBD uses **Stripe Checkout with BDT currency**.
+
+The parcel cost is stored and displayed as the actual BDT amount.
+
+For example:
 
 ```text
-User
-  ↓
-Book Parcel
-  ↓
-Calculate Delivery Charge
-  ↓
-Stripe Payment
-  ↓
-Payment Verification
-  ↓
-Generate Tracking ID
-  ↓
-Admin Assignment
-  ↓
-Rider Pickup
-  ↓
-Warehouse / Sorting
-  ↓
-Delivery
-  ↓
-OTP Verification
-  ↓
-Delivered
+Parcel Cost
+৳80
 ```

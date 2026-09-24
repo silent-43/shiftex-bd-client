@@ -1,14 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import useAuth from "../../../hooks/useAuth";
 import { Link, useLocation, useNavigate } from "react-router";
 import SocialLogin from "../SocialLogin/SocialLogin";
 import axios from "axios";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Register = () => {
   const location = useLocation();
   // console.log("register location :", location);
   const navigate = useNavigate();
+  const axiosSecure = useAxiosSecure();
+  //password show/hide
+  const [showPassword, setShowPassword] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -19,13 +25,13 @@ const Register = () => {
   const { registerUser, updateUserProfile } = useAuth();
 
   const handleRegistration = (data) => {
-    console.log("after register : ", data.photo[0]);
+    // console.log("after register : ", data.photo[0]);
 
     const profileImg = data.photo[0];
 
     registerUser(data.email, data.password)
-      .then((result) => {
-        console.log(result.user);
+      .then(() => {
+        // console.log(result.user);
         navigate(location?.state || "/");
 
         //store the photo & get the photo url
@@ -35,12 +41,25 @@ const Register = () => {
         //send the photo to store and get the url
         const image_API_URL = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host_key}`;
         axios.post(image_API_URL, formData).then((res) => {
-          console.log("after image upload :", res.data.data.url);
+          // console.log("after image upload :", res.data.data.url);
+          const photoURL = res.data.data.url;
 
-          //udate user profile to firebase
+          //created user in the database
+          const userInfo = {
+            email: data.email,
+            displayName: data.name,
+            photoURL: photoURL,
+          };
+          axiosSecure.post("/users", userInfo).then((res) => {
+            if (res.data.insertedId) {
+              console.log("user created in the database");
+            }
+          });
+
+          //update user profile to firebase
           const userProfile = {
             displayName: data.name,
-            photoURL: res.data.data.url,
+            photoURL: photoURL,
           };
           updateUserProfile(userProfile)
             .then(() => {
@@ -114,16 +133,30 @@ const Register = () => {
 
             {/* password */}
             <label className="label">Password</label>
-            <input
-              type="password"
-              {...register("password", {
-                required: true,
-                minLength: 6,
-                pattern: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&]).+$/,
-              })}
-              className="input"
-              placeholder="Password"
-            />
+
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                {...register("password", {
+                  required: true,
+                  minLength: 6,
+                  pattern: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&]).+$/,
+                })}
+                className="input w-full pr-12"
+                placeholder="Password"
+              />
+
+              {/* Eye Button */}
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-[#03373d] cursor-pointer"
+                title={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
+              </button>
+            </div>
+
             {errors.password?.type === "required" && (
               <p className="text-red-500 font-bold">Password is Required</p>
             )}

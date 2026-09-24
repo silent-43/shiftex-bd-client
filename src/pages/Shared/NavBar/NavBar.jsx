@@ -49,6 +49,14 @@ const NavBar = () => {
           Send Parcel
         </NavLink>
       </li>
+      <li>
+        <NavLink
+          to="/rider"
+          className="rounded-lg px-4 py-2 text-[15px] font-semibold text-[#365b63] transition-all duration-300 hover:bg-[#57909a] hover:text-white hover:shadow-md hover:-translate-y-1"
+        >
+          Be a Rider
+        </NavLink>
+      </li>
 
       <li>
         <NavLink
