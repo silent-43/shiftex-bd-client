@@ -1,6 +1,6 @@
 # ShiftexBD
 
-A modern full-stack parcel delivery platform for parcel booking, payment, tracking, and delivery management.
+A modern full-stack parcel delivery platform for booking, payment, tracking, and delivery management.
 
 ## 🌐 Live Project
 
@@ -9,133 +9,23 @@ A modern full-stack parcel delivery platform for parcel booking, payment, tracki
 - **Client Repository:** https://github.com/silent-43/shiftex-bd-client
 - **Server Repository:** https://github.com/silent-43/shiftex-bd-server
 
----
-
 ## ✨ Features
 
-### 🔐 Authentication
-
-- Email & Password Authentication
-- Google Sign-In
-- Password Reset
-- User Profile
-- Logout
-- Protected Routes
-- Role-Based Access Structure
-
-### 📦 Parcel Management
-
-- Send Parcel
-- Sender & Receiver Information
-- Parcel Type & Weight
-- Delivery Location
-- Automatic Delivery Charge Calculation
-- Parcel Booking
-- My Parcels
-- Parcel Details
-- Parcel Status
-- Tracking ID
-
-### 💳 Payment
-
-- Stripe Payment Integration
-- BDT (৳) Currency Support
-- Secure Stripe Checkout
-- Payment Verification
-- Payment Status
-- Transaction ID
-- Payment Records
-- Automatic Tracking ID Generation After Successful Payment
-- Payment Amount Stored in BDT in MongoDB
-- Stripe Amount Converted from BDT to Poisha Automatically
-
-### 📊 Dashboard
-
-- Responsive Dashboard Layout
-- Collapsible Sidebar Navigation
-- Mobile Drawer Navigation
-- Dashboard Home
-- My Parcels
-- Payment History
-- Role-Based Dashboard Structure
-- User, Admin & Rider Workflow Structure
-
-### 👨‍💼 Admin
-
-- Admin Dashboard Structure
-- Parcel Management
-- Rider Management
-- Rider Assignment
-- Parcel Status Management
-- Warehouse Management Workflow
-- Delivery Operation Workflow
-
-### 🚴 Rider
-
-- Rider Dashboard Structure
-- Assigned Parcel Workflow
-- Parcel Pickup
-- Parcel Status Update
-- Warehouse Handoff
-- OTP-Based Delivery Confirmation
-- Delivery History
-- Earnings Workflow
-
-### 📍 Coverage
-
-- Interactive Bangladesh Map
-- React Leaflet Integration
-- Service Center Markers
-- District Coverage Information
-- Service Center Popups
-- District Search
-- Map Navigation with `flyTo()`
-- Coverage Across 64 Districts
-
-### 🏠 Home Page
-
-- Responsive Navbar
-- ShiftexBD Branding
-- Authentication Buttons
-- Hero Carousel
-- Deliveryman Section
-- How It Works
-- Why Choose Us
-- FAQ
-- Call-to-Action
-- Responsive Footer
-
-### ℹ️ About Us
-
-- Company Introduction
-- Service Information
-- Feature Cards
-- Why Choose ShiftexBD
-- Interactive Learn More Modal
-- Detailed Information Without Page Navigation
-
-### 💰 Pricing
-
-- Document Delivery Pricing
-- Non-Document Delivery Pricing
-- Weight-Based Pricing
-- Within-City & Outside-City Charges
-- Pricing Cards
-- Pricing Table
-- Example Calculations
-- BDT Currency Support
-
-### 📞 Contact Us
-
-- Contact Information
-- Contact Form
-- Form Validation
-- EmailJS Integration
-- SweetAlert2 Notifications
-- FAQ & Support Information
-- Responsive Design
-
----
+- 🔐 Firebase Authentication — Email/Password, Google Sign-In, Password Reset & Profile
+- 🔑 Role-Based Access — User, Admin & Rider workflows
+- 🛡️ Multi-Layer Security — Protected Routes, JWT Authorization, Backend Role Verification & Admin Route Protection
+- 📦 Parcel Management — Booking, sender/receiver info, parcel type, weight, location, status & details
+- 🆔 Tracking — Automatic tracking ID generation & parcel tracking
+- 💳 Stripe Payments — Secure Checkout, payment verification, transaction ID & payment history
+- 💰 Dynamic Pricing — Weight-based, within-city & outside-city delivery charges
+- 📊 Dashboard — Responsive layout, collapsible sidebar, mobile drawer & role-based navigation
+- 👨‍💼 Admin — User management, rider approval, rider assignment, parcel & warehouse management
+- 🚴 Rider — Assigned parcels, pickup, status updates, warehouse handoff, OTP delivery & earnings workflow
+- 📍 Coverage — Interactive Bangladesh map, service centers, district search & 64-district coverage
+- 🏠 Home — Hero carousel, deliveryman section, How It Works, Why Choose Us, FAQ & CTA
+- ℹ️ About Us — Company information, services, features & interactive Learn More modal
+- 📞 Contact — Contact form, validation, EmailJS, FAQ & support information
+- 📱 Responsive — Mobile, tablet & desktop friendly UI
 
 ## 🛠️ Technologies
 
@@ -145,15 +35,16 @@ A modern full-stack parcel delivery platform for parcel booking, payment, tracki
 - React Router
 - Tailwind CSS
 - DaisyUI
-- React Icons
-- React Responsive Carousel
-- React Leaflet
 - TanStack React Query
 - Axios
 - Firebase Authentication
 - React Hook Form
+- React Leaflet
+- React Icons
+- React Responsive Carousel
 - SweetAlert2
 - EmailJS
+- Lottie
 
 ### Backend
 
@@ -161,8 +52,8 @@ A modern full-stack parcel delivery platform for parcel booking, payment, tracki
 - Express.js
 - MongoDB
 - Firebase Admin
-- REST API
 - Stripe
+- REST API
 - Crypto
 
 ### Deployment
@@ -170,71 +61,24 @@ A modern full-stack parcel delivery platform for parcel booking, payment, tracki
 - Firebase Hosting
 - Render
 
----
-
 ## 💰 Delivery Pricing
 
-All delivery charges are calculated and displayed in **Bangladeshi Taka (BDT / ৳)**.
+| Type                | Within City | Outside City |
+| ------------------- | ----------: | -----------: |
+| Document            |         ৳60 |          ৳80 |
+| Non-Document (≤3kg) |        ৳110 |         ৳150 |
 
-### 📄 Document
+- **Above 3kg:** +৳40/kg for extra weight
+- **Outside City:** Additional ৳40 charge
+- **Example — 5kg:** ৳190 within city / ৳230 outside city
 
-| Delivery Type           | Charge |
-| ----------------------- | -----: |
-| Within City             |    ৳60 |
-| Outside City / District |    ৳80 |
+## 🔒 Security
 
-### 📦 Non-Document — Up to 3kg
+ShiftexBD implements multiple layers of access control:
 
-| Delivery Type           | Charge |
-| ----------------------- | -----: |
-| Within City             |   ৳110 |
-| Outside City / District |   ৳150 |
-
-### ⚖️ Non-Document — Above 3kg
-
-For parcels weighing more than 3kg:
-
-- Additional **৳40 per kg** is added for the extra weight.
-- Outside-city deliveries include an additional **৳40 charge**.
-
-### 🧮 Pricing Examples
-
-#### Document
-
-- Within City → **৳60**
-- Outside City → **৳80**
-
-#### Non-Document — 3kg or Less
-
-- Within City → **৳110**
-- Outside City → **৳150**
-
-#### Non-Document — Above 3kg
-
-For example, a 5kg parcel:
-
-- Base charge = ৳110
-- Extra weight = 5kg - 3kg = 2kg
-- Extra weight charge = 2 × ৳40 = ৳80
-- Total within-city charge = **৳190**
-
-For outside-city delivery:
-
-- Base charge = ৳150
-- Extra weight charge = ৳80
-- Total outside-city charge = **৳230**
-
----
-
-## 💳 Payment Amount Handling
-
-ShiftexBD uses **Stripe Checkout with BDT currency**.
-
-The parcel cost is stored and displayed as the actual BDT amount.
-
-For example:
-
-```text
-Parcel Cost
-৳80
-```
+- Firebase Authentication
+- JWT-based API Authorization
+- Protected Frontend Routes
+- Backend Role Verification
+- Admin-only Route Protection
+- Role-based Dashboard Navigation
