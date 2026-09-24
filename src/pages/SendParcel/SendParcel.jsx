@@ -2,6 +2,15 @@ import React from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { useLoaderData, useNavigate } from "react-router";
 import Swal from "sweetalert2";
+import {
+  FaBoxOpen,
+  FaMapMarkerAlt,
+  FaUser,
+  FaEnvelope,
+  FaWeightHanging,
+  FaClipboardList,
+  FaTruck,
+} from "react-icons/fa";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
 
@@ -18,28 +27,36 @@ const SendParcel = () => {
   const navigate = useNavigate();
 
   const serviceCenters = useLoaderData();
+
   const regionsDuplicate = serviceCenters.map((c) => c.region);
   const regions = [...new Set(regionsDuplicate)];
-  //useMemo or useWatch
-  const senderRegion = useWatch({ control, name: "senderRegion" });
-  const receiverRegion = useWatch({ control, name: "receiverRegion" });
+
+  const senderRegion = useWatch({
+    control,
+    name: "senderRegion",
+  });
+
+  const receiverRegion = useWatch({
+    control,
+    name: "receiverRegion",
+  });
 
   const districtsByRegion = (region) => {
     const regionDistricts = serviceCenters.filter((c) => c.region === region);
-    const districts = regionDistricts.map((d) => d.district);
-    return districts;
+
+    return regionDistricts.map((d) => d.district);
   };
-  //   console.log(regions);
 
   const handleSendParcel = (data) => {
     console.log(data);
 
     const isDocument = data.parcelType === "document";
     const isSameDistrict = data.senderDistrict === data.receiverDistrict;
-    // console.log(isSameDistrict);
+
     const parcelWeight = parseFloat(data.parcelWeight);
 
     let cost = 0;
+
     if (isDocument) {
       cost = isSameDistrict ? 60 : 80;
     } else {
@@ -48,192 +65,283 @@ const SendParcel = () => {
       } else {
         const minCharge = isSameDistrict ? 110 : 150;
         const extraWeight = parcelWeight - 3;
+
         const extraCharge = isSameDistrict
           ? extraWeight * 40
           : extraWeight * 40 + 40;
+
         cost = minCharge + extraCharge;
       }
     }
 
     console.log("cost :", cost);
+
     data.cost = cost;
 
     Swal.fire({
       title: "Agree with the Cost?",
-      text: `You will be charged ${cost} !`,
+      text: `You will be charged ৳${cost}`,
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#03373d",
       cancelButtonColor: "#d33",
       confirmButtonText: "Confirm and Continue to Payment",
     }).then((result) => {
-      if (result.isConfirmed)
-        //save the parcel info to the database
+      if (result.isConfirmed) {
         axiosSecure.post("/parcels", data).then((res) => {
           console.log("after saving data", res.data);
+
           if (res.data.insertedId) {
             navigate("/dashboard/my-parcels");
+
             Swal.fire({
               position: "top-end",
               icon: "success",
-              title: "Parcel has Created. PLease Pay",
+              title: "Parcel has Created. Please Pay",
               showConfirmButton: false,
               timer: 2500,
             });
           }
         });
+      }
     });
   };
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-12">
-      {/* ============================ title ============================ */}
-      <div className="text-center">
-        <h2 className="text-5xl font-bold">Send a Parcel</h2>
-        <h2 className="mt-3 text-2xl font-bold">Enter Your Parcel Details</h2>
-      </div>
+    <div className="min-h-screen bg-base-200 px-4 py-8 md:px-6 lg:py-10">
+      <div className="mx-auto max-w-6xl">
+        {/* ============================ Page Header ============================ */}
+        <div className="mb-8 text-center">
+          <div className="mb-3 flex justify-center">
+            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#03373d] text-[#CAEB66] shadow-lg">
+              <FaTruck className="text-2xl" />
+            </div>
+          </div>
 
-      <form
-        onSubmit={handleSubmit(handleSendParcel)}
-        className="mx-auto mt-10 max-w-6xl p-4 text-black"
-      >
-        {/* ========================== parcel info =========================== */}
-        <div className="flex justify-center gap-6">
-          <label className="label cursor-pointer gap-2">
-            <input
-              type="radio"
-              {...register("parcelType")}
-              value="document"
-              className="radio radio-success"
-              defaultChecked
-            />
-            Document
-          </label>
+          <h1 className="text-3xl font-extrabold text-[#03373d] md:text-4xl">
+            Send a Parcel
+          </h1>
 
-          <label className="label cursor-pointer gap-2">
-            <input
-              type="radio"
-              {...register("parcelType")}
-              value="non-document"
-              className="radio radio-success"
-            />
-            Non-Document
-          </label>
+          <p className="mt-2 text-sm text-gray-500 md:text-base">
+            Enter your parcel and delivery information carefully
+          </p>
         </div>
 
-        {/* ======================== parcel name & weight ================================ */}
-        <div className="my-8 grid grid-cols-1 gap-10 md:grid-cols-2">
-          {/* Parcel Name */}
-          <fieldset className="fieldset">
-            <label className="label font-semibold">Parcel Name</label>
+        <form onSubmit={handleSubmit(handleSendParcel)} className="space-y-6">
+          {/* ========================== Parcel Information ========================== */}
+          <div className="rounded-3xl bg-white p-5 shadow-sm md:p-7">
+            <div className="mb-6 flex items-center gap-3 border-b border-gray-100 pb-4">
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#03373d] text-[#CAEB66]">
+                <FaBoxOpen />
+              </div>
 
-            <input
-              type="text"
-              {...register("parcelName", {
-                required: true,
-              })}
-              className="input w-full"
-              placeholder="Parcel Name"
-            />
+              <div>
+                <h2 className="text-xl font-bold text-[#03373d]">
+                  Parcel Information
+                </h2>
 
-            {errors.parcelName?.type === "required" && (
-              <p className="text-sm font-bold text-red-500">
-                Parcel Name is Required
-              </p>
-            )}
-          </fieldset>
-
-          {/* Parcel Weight */}
-          <fieldset className="fieldset">
-            <label className="label font-semibold">Parcel Weight (kg)</label>
-
-            <input
-              type="number"
-              step="0.1"
-              {...register("parcelWeight", {
-                required: true,
-              })}
-              className="input w-full"
-              placeholder="Parcel Weight"
-            />
-
-            {errors.parcelWeight?.type === "required" && (
-              <p className="text-sm font-bold text-red-500">
-                Parcel Weight is Required
-              </p>
-            )}
-          </fieldset>
-        </div>
-
-        {/* ============================= sender & receiver ============================ */}
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
-          {/* ============================= Sender Info ============================== */}
-          <fieldset className="fieldset">
-            <h2 className="mb-5 text-center text-2xl font-bold">
-              Sender Details
-            </h2>
-
-            {/* Sender Name */}
-            <div className="mb-4">
-              <label className="label font-semibold">Sender Name</label>
-
-              <input
-                type="text"
-                {...register("senderName", {
-                  required: true,
-                })}
-                defaultValue={user?.displayName}
-                readOnly
-                className="input w-full"
-                placeholder="Sender Name"
-              />
-
-              <div className="h-5">
-                {errors.senderName?.type === "required" && (
-                  <p className="text-sm font-bold text-red-500">
-                    Sender Name is Required
-                  </p>
-                )}
+                <p className="text-xs text-gray-500">
+                  Tell us about the parcel you want to send
+                </p>
               </div>
             </div>
 
-            {/* Sender Email */}
-            <div className="mb-4">
-              <label className="label font-semibold">Sender Email</label>
+            {/* Parcel Type */}
+            <div className="mb-6">
+              <label className="mb-3 block text-sm font-bold text-gray-700">
+                Parcel Type
+              </label>
 
-              <input
-                type="email"
-                {...register("senderEmail", {
-                  required: true,
-                })}
-                defaultValue={user?.email}
-                readOnly
-                className="input w-full"
-                placeholder="Sender Email"
-              />
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                <label className="flex cursor-pointer items-center gap-3 rounded-2xl border-2 border-gray-200 p-4 transition hover:border-[#CAEB66] hover:bg-[#f8ffe8]">
+                  <input
+                    type="radio"
+                    {...register("parcelType")}
+                    value="document"
+                    className="radio radio-sm checked:bg-[#03373d]"
+                    defaultChecked
+                  />
 
-              <div className="h-5">
-                {errors.senderEmail?.type === "required" && (
-                  <p className="text-sm font-bold text-red-500">
-                    Sender Email is Required
-                  </p>
-                )}
+                  <div>
+                    <p className="font-bold text-[#03373d]">Document</p>
+                    <p className="text-xs text-gray-500">
+                      Papers, files and documents
+                    </p>
+                  </div>
+                </label>
+
+                <label className="flex cursor-pointer items-center gap-3 rounded-2xl border-2 border-gray-200 p-4 transition hover:border-[#CAEB66] hover:bg-[#f8ffe8]">
+                  <input
+                    type="radio"
+                    {...register("parcelType")}
+                    value="non-document"
+                    className="radio radio-sm checked:bg-[#03373d]"
+                  />
+
+                  <div>
+                    <p className="font-bold text-[#03373d]">Non-Document</p>
+                    <p className="text-xs text-gray-500">
+                      Packages and other items
+                    </p>
+                  </div>
+                </label>
               </div>
             </div>
 
-            {/* Sender Region */}
-            <div className="mb-4">
-              <fieldset className="fieldset">
-                <legend className="fieldset-legend font-semibold">
+            {/* Parcel Name & Weight */}
+            <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+              {/* Parcel Name */}
+              <fieldset>
+                <label className="mb-2 block text-sm font-bold text-gray-700">
+                  Parcel Name
+                </label>
+
+                <div className="relative">
+                  <FaBoxOpen className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+
+                  <input
+                    type="text"
+                    {...register("parcelName", {
+                      required: true,
+                    })}
+                    className="input h-12 w-full rounded-xl border-gray-200 bg-gray-50 pl-11 text-sm focus:border-[#03373d] focus:outline-none"
+                    placeholder="Enter parcel name"
+                  />
+                </div>
+
+                <div className="mt-1 min-h-5">
+                  {errors.parcelName?.type === "required" && (
+                    <p className="text-xs font-semibold text-red-500">
+                      Parcel Name is Required
+                    </p>
+                  )}
+                </div>
+              </fieldset>
+
+              {/* Parcel Weight */}
+              <fieldset>
+                <label className="mb-2 block text-sm font-bold text-gray-700">
+                  Parcel Weight (kg)
+                </label>
+
+                <div className="relative">
+                  <FaWeightHanging className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+
+                  <input
+                    type="number"
+                    step="0.1"
+                    min="0"
+                    {...register("parcelWeight", {
+                      required: true,
+                    })}
+                    className="input h-12 w-full rounded-xl border-gray-200 bg-gray-50 pl-11 text-sm focus:border-[#03373d] focus:outline-none"
+                    placeholder="e.g. 2.5"
+                  />
+                </div>
+
+                <div className="mt-1 min-h-5">
+                  {errors.parcelWeight?.type === "required" && (
+                    <p className="text-xs font-semibold text-red-500">
+                      Parcel Weight is Required
+                    </p>
+                  )}
+                </div>
+              </fieldset>
+            </div>
+          </div>
+
+          {/* ============================= Sender & Receiver ============================ */}
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+            {/* ============================= Sender ============================== */}
+            <div className="rounded-3xl bg-white p-5 shadow-sm md:p-7">
+              <div className="mb-6 flex items-center gap-3 border-b border-gray-100 pb-4">
+                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#03373d] text-[#CAEB66]">
+                  <FaMapMarkerAlt />
+                </div>
+
+                <div>
+                  <h2 className="text-xl font-bold text-[#03373d]">
+                    Sender Details
+                  </h2>
+
+                  <p className="text-xs text-gray-500">
+                    Where should we collect the parcel?
+                  </p>
+                </div>
+              </div>
+
+              {/* Sender Name */}
+              <div className="mb-4">
+                <label className="mb-2 block text-sm font-bold text-gray-700">
+                  Sender Name
+                </label>
+
+                <div className="relative">
+                  <FaUser className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+
+                  <input
+                    type="text"
+                    {...register("senderName", {
+                      required: true,
+                    })}
+                    defaultValue={user?.displayName}
+                    readOnly
+                    className="input h-12 w-full rounded-xl border-gray-200 bg-gray-100 pl-11 text-sm"
+                    placeholder="Sender Name"
+                  />
+                </div>
+
+                <div className="min-h-5">
+                  {errors.senderName?.type === "required" && (
+                    <p className="text-xs font-semibold text-red-500">
+                      Sender Name is Required
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              {/* Sender Email */}
+              <div className="mb-4">
+                <label className="mb-2 block text-sm font-bold text-gray-700">
+                  Sender Email
+                </label>
+
+                <div className="relative">
+                  <FaEnvelope className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+
+                  <input
+                    type="email"
+                    {...register("senderEmail", {
+                      required: true,
+                    })}
+                    defaultValue={user?.email}
+                    readOnly
+                    className="input h-12 w-full rounded-xl border-gray-200 bg-gray-100 pl-11 text-sm"
+                    placeholder="Sender Email"
+                  />
+                </div>
+
+                <div className="min-h-5">
+                  {errors.senderEmail?.type === "required" && (
+                    <p className="text-xs font-semibold text-red-500">
+                      Sender Email is Required
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              {/* Sender Region */}
+              <div className="mb-4">
+                <label className="mb-2 block text-sm font-bold text-gray-700">
                   Sender Region
-                </legend>
+                </label>
 
                 <select
                   {...register("senderRegion", {
                     required: true,
                   })}
                   defaultValue=""
-                  className="select w-full"
+                  className="select h-12 w-full rounded-xl border-gray-200 bg-gray-50 text-sm focus:border-[#03373d] focus:outline-none"
                 >
                   <option value="" disabled>
                     Pick a Region
@@ -245,147 +353,172 @@ const SendParcel = () => {
                     </option>
                   ))}
                 </select>
-              </fieldset>
 
-              <div className="h-5">
-                {errors.senderRegion?.type === "required" && (
-                  <p className="text-sm font-bold text-red-500">
-                    Sender Region is Required
-                  </p>
-                )}
+                <div className="min-h-5">
+                  {errors.senderRegion?.type === "required" && (
+                    <p className="text-xs font-semibold text-red-500">
+                      Sender Region is Required
+                    </p>
+                  )}
+                </div>
               </div>
-            </div>
 
-            {/* Sender District */}
-            <div className="mb-4">
-              <fieldset className="fieldset">
-                <legend className="fieldset-legend font-semibold">
+              {/* Sender District */}
+              <div className="mb-4">
+                <label className="mb-2 block text-sm font-bold text-gray-700">
                   Sender District
-                </legend>
+                </label>
 
                 <select
                   {...register("senderDistrict", {
                     required: true,
                   })}
                   defaultValue=""
-                  className="select w-full"
+                  disabled={!senderRegion}
+                  className="select h-12 w-full rounded-xl border-gray-200 bg-gray-50 text-sm focus:border-[#03373d] focus:outline-none disabled:bg-gray-100 disabled:text-gray-400"
                 >
                   <option value="" disabled>
-                    Pick a District
+                    {senderRegion ? "Pick a District" : "Select Region First"}
                   </option>
 
-                  {districtsByRegion(senderRegion).map((r, index) => (
-                    <option key={index} value={r}>
-                      {r}
+                  {districtsByRegion(senderRegion).map((district, index) => (
+                    <option key={index} value={district}>
+                      {district}
                     </option>
                   ))}
                 </select>
-              </fieldset>
 
-              <div className="h-5">
-                {errors.senderDistrict?.type === "required" && (
-                  <p className="text-sm font-bold text-red-500">
-                    Sender District is Required
-                  </p>
-                )}
+                <div className="min-h-5">
+                  {errors.senderDistrict?.type === "required" && (
+                    <p className="text-xs font-semibold text-red-500">
+                      Sender District is Required
+                    </p>
+                  )}
+                </div>
               </div>
+
+              {/* Sender Address */}
+              <div className="mb-4">
+                <label className="mb-2 block text-sm font-bold text-gray-700">
+                  Sender Address
+                </label>
+
+                <input
+                  type="text"
+                  {...register("senderAddress", {
+                    required: true,
+                  })}
+                  className="input h-12 w-full rounded-xl border-gray-200 bg-gray-50 text-sm focus:border-[#03373d] focus:outline-none"
+                  placeholder="Enter sender address"
+                />
+
+                <div className="min-h-5">
+                  {errors.senderAddress?.type === "required" && (
+                    <p className="text-xs font-semibold text-red-500">
+                      Sender Address is Required
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              {/* Pickup Instruction */}
+              <label className="mb-2 block text-sm font-bold text-gray-700">
+                Pickup Instruction
+              </label>
+
+              <textarea
+                {...register("senderPickupInstruction")}
+                className="textarea min-h-24 w-full rounded-xl border-gray-200 bg-gray-50 text-sm focus:border-[#03373d] focus:outline-none"
+                placeholder="Enter pickup instruction"
+              ></textarea>
             </div>
 
-            {/* Sender Address */}
-            <div className="mb-4">
-              <label className="label font-semibold">Sender Address</label>
+            {/* ============================= Receiver ============================== */}
+            <div className="rounded-3xl bg-white p-5 shadow-sm md:p-7">
+              <div className="mb-6 flex items-center gap-3 border-b border-gray-100 pb-4">
+                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#CAEB66] text-[#03373d]">
+                  <FaMapMarkerAlt />
+                </div>
 
-              <input
-                type="text"
-                {...register("senderAddress", {
-                  required: true,
-                })}
-                className="input w-full"
-                placeholder="Sender Address"
-              />
+                <div>
+                  <h2 className="text-xl font-bold text-[#03373d]">
+                    Receiver Details
+                  </h2>
 
-              <div className="h-5">
-                {errors.senderAddress?.type === "required" && (
-                  <p className="text-sm font-bold text-red-500">
-                    Sender Address is Required
+                  <p className="text-xs text-gray-500">
+                    Where should we deliver the parcel?
                   </p>
-                )}
+                </div>
               </div>
-            </div>
 
-            {/* Pickup Instruction */}
-            <label className="label font-semibold">Pickup Instruction</label>
+              {/* Receiver Name */}
+              <div className="mb-4">
+                <label className="mb-2 block text-sm font-bold text-gray-700">
+                  Receiver Name
+                </label>
 
-            <textarea
-              {...register("senderPickupInstruction")}
-              className="textarea w-full"
-              placeholder="Enter pickup instruction"
-            ></textarea>
-          </fieldset>
+                <div className="relative">
+                  <FaUser className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
 
-          {/* ============================= Receiver Info ============================== */}
-          <fieldset className="fieldset">
-            <h2 className="mb-5 text-center text-2xl font-bold">
-              Receiver Details
-            </h2>
+                  <input
+                    type="text"
+                    {...register("receiverName", {
+                      required: true,
+                    })}
+                    className="input h-12 w-full rounded-xl border-gray-200 bg-gray-50 pl-11 text-sm focus:border-[#03373d] focus:outline-none"
+                    placeholder="Receiver Name"
+                  />
+                </div>
 
-            {/* Receiver Name */}
-            <div className="mb-4">
-              <label className="label font-semibold">Receiver Name</label>
-
-              <input
-                type="text"
-                {...register("receiverName", {
-                  required: true,
-                })}
-                className="input w-full"
-                placeholder="Receiver Name"
-              />
-
-              <div className="h-5">
-                {errors.receiverName?.type === "required" && (
-                  <p className="text-sm font-bold text-red-500">
-                    Receiver Name is Required
-                  </p>
-                )}
+                <div className="min-h-5">
+                  {errors.receiverName?.type === "required" && (
+                    <p className="text-xs font-semibold text-red-500">
+                      Receiver Name is Required
+                    </p>
+                  )}
+                </div>
               </div>
-            </div>
 
-            {/* Receiver Email */}
-            <div className="mb-4">
-              <label className="label font-semibold">Receiver Email</label>
+              {/* Receiver Email */}
+              <div className="mb-4">
+                <label className="mb-2 block text-sm font-bold text-gray-700">
+                  Receiver Email
+                </label>
 
-              <input
-                type="email"
-                {...register("receiverEmail", {
-                  required: true,
-                })}
-                className="input w-full"
-                placeholder="Receiver Email"
-              />
+                <div className="relative">
+                  <FaEnvelope className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
 
-              <div className="h-5">
-                {errors.receiverEmail?.type === "required" && (
-                  <p className="text-sm font-bold text-red-500">
-                    Receiver Email is Required
-                  </p>
-                )}
+                  <input
+                    type="email"
+                    {...register("receiverEmail", {
+                      required: true,
+                    })}
+                    className="input h-12 w-full rounded-xl border-gray-200 bg-gray-50 pl-11 text-sm focus:border-[#03373d] focus:outline-none"
+                    placeholder="Receiver Email"
+                  />
+                </div>
+
+                <div className="min-h-5">
+                  {errors.receiverEmail?.type === "required" && (
+                    <p className="text-xs font-semibold text-red-500">
+                      Receiver Email is Required
+                    </p>
+                  )}
+                </div>
               </div>
-            </div>
 
-            {/* Receiver Region */}
-            <div className="mb-4">
-              <fieldset className="fieldset">
-                <legend className="fieldset-legend font-semibold">
+              {/* Receiver Region */}
+              <div className="mb-4">
+                <label className="mb-2 block text-sm font-bold text-gray-700">
                   Receiver Region
-                </legend>
+                </label>
 
                 <select
                   {...register("receiverRegion", {
                     required: true,
                   })}
                   defaultValue=""
-                  className="select w-full"
+                  className="select h-12 w-full rounded-xl border-gray-200 bg-gray-50 text-sm focus:border-[#03373d] focus:outline-none"
                 >
                   <option value="" disabled>
                     Pick a Region
@@ -397,95 +530,113 @@ const SendParcel = () => {
                     </option>
                   ))}
                 </select>
-              </fieldset>
 
-              <div className="h-5">
-                {errors.receiverRegion?.type === "required" && (
-                  <p className="text-sm font-bold text-red-500">
-                    Receiver Region is Required
-                  </p>
-                )}
+                <div className="min-h-5">
+                  {errors.receiverRegion?.type === "required" && (
+                    <p className="text-xs font-semibold text-red-500">
+                      Receiver Region is Required
+                    </p>
+                  )}
+                </div>
               </div>
-            </div>
 
-            {/* Receiver District */}
-            <div className="mb-4">
-              <fieldset className="fieldset">
-                <legend className="fieldset-legend font-semibold">
+              {/* Receiver District */}
+              <div className="mb-4">
+                <label className="mb-2 block text-sm font-bold text-gray-700">
                   Receiver District
-                </legend>
+                </label>
 
                 <select
                   {...register("receiverDistrict", {
                     required: true,
                   })}
                   defaultValue=""
-                  className="select w-full"
+                  disabled={!receiverRegion}
+                  className="select h-12 w-full rounded-xl border-gray-200 bg-gray-50 text-sm focus:border-[#03373d] focus:outline-none disabled:bg-gray-100 disabled:text-gray-400"
                 >
                   <option value="" disabled>
-                    Pick a District
+                    {receiverRegion ? "Pick a District" : "Select Region First"}
                   </option>
 
-                  {districtsByRegion(receiverRegion).map((d, index) => (
-                    <option key={index} value={d}>
-                      {d}
+                  {districtsByRegion(receiverRegion).map((district, index) => (
+                    <option key={index} value={district}>
+                      {district}
                     </option>
                   ))}
                 </select>
-              </fieldset>
 
-              <div className="h-5">
-                {errors.receiverDistrict?.type === "required" && (
-                  <p className="text-sm font-bold text-red-500">
-                    Receiver District is Required
-                  </p>
-                )}
+                <div className="min-h-5">
+                  {errors.receiverDistrict?.type === "required" && (
+                    <p className="text-xs font-semibold text-red-500">
+                      Receiver District is Required
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              {/* Receiver Address */}
+              <div className="mb-4">
+                <label className="mb-2 block text-sm font-bold text-gray-700">
+                  Receiver Address
+                </label>
+
+                <input
+                  type="text"
+                  {...register("receiverAddress", {
+                    required: true,
+                  })}
+                  className="input h-12 w-full rounded-xl border-gray-200 bg-gray-50 text-sm focus:border-[#03373d] focus:outline-none"
+                  placeholder="Enter receiver address"
+                />
+
+                <div className="min-h-5">
+                  {errors.receiverAddress?.type === "required" && (
+                    <p className="text-xs font-semibold text-red-500">
+                      Receiver Address is Required
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              {/* Delivery Instruction */}
+              <label className="mb-2 block text-sm font-bold text-gray-700">
+                Delivery Instruction
+              </label>
+
+              <textarea
+                {...register("receiverPickupInstruction")}
+                className="textarea min-h-24 w-full rounded-xl border-gray-200 bg-gray-50 text-sm focus:border-[#03373d] focus:outline-none"
+                placeholder="Enter delivery instruction"
+              ></textarea>
+            </div>
+          </div>
+
+          {/* ============================== Bottom CTA ============================== */}
+          <div className="rounded-3xl bg-[#03373d] p-6 text-center shadow-lg md:p-8">
+            <div className="mb-4 flex justify-center">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#CAEB66] text-[#03373d]">
+                <FaClipboardList />
               </div>
             </div>
 
-            {/* Receiver Address */}
-            <div className="mb-4">
-              <label className="label font-semibold">Receiver Address</label>
+            <h3 className="text-xl font-bold text-white">
+              Ready to Book Your Delivery?
+            </h3>
 
-              <input
-                type="text"
-                {...register("receiverAddress", {
-                  required: true,
-                })}
-                className="input w-full"
-                placeholder="Receiver Address"
-              />
+            <p className="mt-2 text-sm text-gray-300">
+              Pickup time:{" "}
+              <span className="font-bold text-[#CAEB66]">4 PM - 7 PM</span>{" "}
+              approximately
+            </p>
 
-              <div className="h-5">
-                {errors.receiverAddress?.type === "required" && (
-                  <p className="text-sm font-bold text-red-500">
-                    Receiver Address is Required
-                  </p>
-                )}
-              </div>
-            </div>
-
-            {/* Delivery Instruction */}
-            <label className="label font-semibold">Delivery Instruction</label>
-
-            <textarea
-              {...register("receiverPickupInstruction")}
-              className="textarea w-full"
-              placeholder="Enter delivery instruction"
-            ></textarea>
-          </fieldset>
-        </div>
-
-        {/* ============================== send parcel button ============================== */}
-        <div className="mt-10 flex flex-col items-center gap-4">
-          <p className="text-sm text-center">* PickUp Time 4pm-7pm Approx.</p>
-          <input
-            type="submit"
-            className="btn btn-primary text-black"
-            value="Proceed to Confirm Booking"
-          />
-        </div>
-      </form>
+            <input
+              type="submit"
+              className="btn mt-5 border-none bg-[#CAEB66] px-8 text-[#03373d] shadow-md transition hover:scale-105 hover:bg-[#CAEB66]"
+              value="Proceed to Confirm Booking"
+            />
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
