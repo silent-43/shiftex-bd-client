@@ -4,10 +4,10 @@ A modern full-stack parcel delivery platform for booking, payment, tracking, and
 
 ## 🌐 Live Project
 
-- **Live Website:** [https://shiftex-bd.web.app](https://shiftex-bd.web.app)
-- **Backend API:** [https://shiftex-bd-server.onrender.com](https://shiftex-bd-server.onrender.com)
-- **Client Repository:** [https://github.com/silent-43/shiftex-bd-client](https://github.com/silent-43/shiftex-bd-client)
-- **Server Repository:** [https://github.com/silent-43/shiftex-bd-server](https://github.com/silent-43/shiftex-bd-server)
+- **Live Website:** https://shiftex-bd.web.app
+- **Backend API:** https://shiftex-bd-server.onrender.com
+- **Client Repository:** https://github.com/silent-43/shiftex-bd-client
+- **Server Repository:** https://github.com/silent-43/shiftex-bd-server
 
 ---
 
@@ -26,26 +26,32 @@ A modern full-stack parcel delivery platform for booking, payment, tracking, and
 - Role-Based Dashboard Access
 - Admin-only Route Protection
 
+---
+
 ### 📦 Parcel Management
 
 - Create and book parcels
 - Sender and receiver information
 - Document and non-document parcel types
 - Weight-based pricing
-- Within-city and outside-city delivery pricing
+- Same District and Outside District delivery pricing
 - Parcel payment management
 - Parcel details and delivery status
 - Edit parcel information
 - Delete unpaid parcels
-- Parcel tracking ID
+- Unique parcel tracking ID
 - My Parcels management table
+- Paid and unpaid parcel status
+- Delivery status tracking
+
+---
 
 ### 🆔 Parcel Tracking
 
 - Automatic Tracking ID generation
 - Unique ShiftexBD Tracking ID
 - Tracking ID connected with parcel and payment
-- Real-time delivery status progression
+- Delivery status progression
 - Tracking history stored in MongoDB
 - Timeline-based parcel tracking
 - Tracking events include:
@@ -68,14 +74,39 @@ A modern full-stack parcel delivery platform for booking, payment, tracking, and
 - Payment information connected with parcel records
 - Duplicate payment-success request handling
 
+---
+
 ### 💰 Dynamic Delivery Pricing
 
-- Document parcel pricing
-- Non-document parcel pricing
-- Weight-based pricing
-- Within-city delivery charge
-- Outside-city delivery charge
-- Additional charge for parcels above 3kg
+ShiftexBD uses dynamic pricing based on parcel type, weight, and delivery location.
+
+#### 📄 Document Parcel
+
+| Delivery Type    | Price |
+| ---------------- | ----: |
+| Same District    |   ৳80 |
+| Outside District |  ৳100 |
+
+#### 📦 Non-Document Parcel Up To 3kg
+
+| Delivery Type    | Price |
+| ---------------- | ----: |
+| Same District    |  ৳130 |
+| Outside District |  ৳170 |
+
+#### ⚖️ Non-Document Parcel Above 3kg
+
+- Additional **৳40 per extra kg**
+- Outside District delivery includes an additional **৳40 charge**
+
+Examples:
+
+| Parcel | Same District | Outside District |
+| ------ | ------------: | ---------------: |
+| 4kg    |          ৳170 |             ৳250 |
+| 5kg    |          ৳210 |             ৳290 |
+
+---
 
 ### 📊 Dashboard
 
@@ -85,11 +116,17 @@ A modern full-stack parcel delivery platform for booking, payment, tracking, and
 - Role-based navigation
 - Dashboard home
 - My Parcels
+- My Profile
 - Payment History
 - Rider dashboard
 - Admin dashboard
-- Responsive tables and cards
-- Mobile, tablet and desktop support
+- Responsive tables
+- Responsive cards
+- Mobile support
+- Tablet support
+- Desktop support
+
+---
 
 ### 👨‍💼 Admin Features
 
@@ -97,14 +134,20 @@ A modern full-stack parcel delivery platform for booking, payment, tracking, and
 - View registered users
 - Rider application management
 - Approve rider applications
+- Reject rider applications
 - Manage rider information
 - Rider assignment
 - Assign riders to parcels
+- View parcel information
 - Parcel management
 - Warehouse management
 - Delivery status management
 - Role-based admin access
 - Rider work-status management
+- Available rider management
+- In-delivery rider management
+
+---
 
 ### 🚴 Rider Features
 
@@ -118,12 +161,15 @@ A modern full-stack parcel delivery platform for booking, payment, tracking, and
 - Parcel pickup status
 - Parcel delivery status
 - Rider work-status management
-- Available / in-delivery rider status
+- Available rider status
+- In-delivery rider status
 - Completed deliveries
 - Rider earnings workflow
 - Cash Out functionality
 - Cash Out History
 - Test cash-out record system
+
+---
 
 ### 🔄 Delivery Workflow
 

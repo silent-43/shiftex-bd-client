@@ -9,47 +9,49 @@ import deliveryManImg from "../../../assets/big-deliveryman.png";
 
 const Banner = () => {
   return (
-    <div className="flex w-full h-[400px] mt-10 shadow-xl">
-      {/* Carousel - 60% */}
-      <div className="w-[60%] h-full">
+    <div className="mt-6 flex w-full flex-col overflow-hidden rounded-xl shadow-xl sm:mt-8 md:mt-10 lg:h-[400px] lg:flex-row">
+      {/* Carousel */}
+      <div className="h-[220px] w-full sm:h-[280px] md:h-[320px] lg:h-full lg:w-[60%]">
         <Carousel
           autoPlay={true}
           infiniteLoop={true}
           interval={2000}
           showThumbs={false}
           showStatus={false}
+          showIndicators={true}
+          showArrows={true}
         >
-          <div>
+          <div className="h-[220px] sm:h-[280px] md:h-[320px] lg:h-[400px]">
             <img
               src={bannerImg1}
               alt="Banner 1"
-              className="h-[400px] w-full object-cover"
+              className="h-full w-full object-cover"
             />
           </div>
 
-          <div>
+          <div className="h-[220px] sm:h-[280px] md:h-[320px] lg:h-[400px]">
             <img
               src={bannerImg2}
               alt="Banner 2"
-              className="h-[400px] w-full object-cover"
+              className="h-full w-full object-cover"
             />
           </div>
 
-          <div>
+          <div className="h-[220px] sm:h-[280px] md:h-[320px] lg:h-[400px]">
             <img
               src={bannerImg3}
               alt="Banner 3"
-              className="h-[400px] w-full object-cover"
+              className="h-full w-full object-cover"
             />
           </div>
         </Carousel>
       </div>
 
-      {/* Delivery Man - 40% */}
-      <div className="w-[40%] h-full flex items-end justify-center overflow-hidden">
+      {/* Delivery Man */}
+      <div className="flex h-[260px] w-full items-end justify-center overflow-hidden bg-base-100 sm:h-[320px] md:h-[360px] lg:h-full lg:w-[40%]">
         <img
           src={deliveryManImg}
-          alt="deliveryMan"
+          alt="Delivery man"
           className="h-full w-full object-contain"
         />
       </div>

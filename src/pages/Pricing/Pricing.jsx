@@ -20,8 +20,8 @@ const Pricing = () => {
 
           <p className="text-sm leading-7 text-gray-600 sm:text-base lg:text-lg">
             Affordable and transparent delivery charges for documents and
-            parcels. Choose your parcel type and destination to understand the
-            delivery cost clearly.
+            parcels. Choose your parcel type, weight, and destination to
+            understand the delivery cost clearly.
           </p>
         </div>
 
@@ -46,32 +46,34 @@ const Pricing = () => {
               other document-type items.
             </p>
 
-            {/* Within City */}
+            {/* Same District */}
             <div className="mb-3 flex items-center justify-between rounded-xl bg-gray-50 p-4">
               <div className="flex items-center gap-3">
                 <FaCity className="text-xl text-[#03373d]" />
 
                 <div>
-                  <p className="font-semibold text-gray-800">Within City</p>
+                  <p className="font-semibold text-gray-800">Same District</p>
                   <p className="text-xs text-gray-500">Any weight</p>
                 </div>
               </div>
 
-              <span className="text-xl font-bold text-[#03373d]">৳60</span>
+              <span className="text-xl font-bold text-[#03373d]">৳80</span>
             </div>
 
-            {/* Outside City */}
+            {/* Outside District */}
             <div className="flex items-center justify-between rounded-xl bg-gray-50 p-4">
               <div className="flex items-center gap-3">
                 <MdLocationOn className="text-xl text-[#03373d]" />
 
                 <div>
-                  <p className="font-semibold text-gray-800">Outside City</p>
+                  <p className="font-semibold text-gray-800">
+                    Outside District
+                  </p>
                   <p className="text-xs text-gray-500">Other district</p>
                 </div>
               </div>
 
-              <span className="text-xl font-bold text-[#03373d]">৳80</span>
+              <span className="text-xl font-bold text-[#03373d]">৳100</span>
             </div>
 
             <div className="mt-5 flex items-center gap-2 text-sm text-gray-600">
@@ -106,32 +108,32 @@ const Pricing = () => {
               up to 3kg.
             </p>
 
-            {/* Within City */}
+            {/* Same District */}
             <div className="mb-3 flex items-center justify-between rounded-xl bg-white/10 p-4">
               <div className="flex items-center gap-3">
                 <FaCity className="text-xl text-[#CAEB66]" />
 
                 <div>
-                  <p className="font-semibold">Within City</p>
+                  <p className="font-semibold">Same District</p>
                   <p className="text-xs text-white/60">Up to 3kg</p>
                 </div>
               </div>
 
-              <span className="text-xl font-bold text-[#CAEB66]">৳110</span>
+              <span className="text-xl font-bold text-[#CAEB66]">৳130</span>
             </div>
 
-            {/* Outside City */}
+            {/* Outside District */}
             <div className="flex items-center justify-between rounded-xl bg-white/10 p-4">
               <div className="flex items-center gap-3">
                 <MdLocationOn className="text-xl text-[#CAEB66]" />
 
                 <div>
-                  <p className="font-semibold">Outside City</p>
-                  <p className="text-xs text-white/60">Other district</p>
+                  <p className="font-semibold">Outside District</p>
+                  <p className="text-xs text-white/60">Up to 3kg</p>
                 </div>
               </div>
 
-              <span className="text-xl font-bold text-[#CAEB66]">৳150</span>
+              <span className="text-xl font-bold text-[#CAEB66]">৳170</span>
             </div>
 
             <div className="mt-5 flex items-center gap-2 text-sm text-white/70">
@@ -158,7 +160,7 @@ const Pricing = () => {
 
             <p className="mb-6 text-sm leading-6 text-gray-600">
               For non-document parcels weighing more than 3kg, additional
-              charges apply based on the extra weight.
+              charges apply based on the extra weight and destination.
             </p>
 
             {/* Extra Weight */}
@@ -175,23 +177,32 @@ const Pricing = () => {
                 <span className="font-bold text-[#03373d]">+৳40 / kg</span>
               </div>
 
-              <div className="flex items-center justify-between pt-3">
-                <span className="text-sm text-gray-700">Outside city</span>
+              <div className="flex items-center justify-between border-b border-orange-200 py-3">
+                <span className="text-sm text-gray-700">Same District</span>
 
-                <span className="font-bold text-[#03373d]">+৳40</span>
+                <span className="font-bold text-[#03373d]">
+                  Base ৳130 + ৳40/kg
+                </span>
+              </div>
+
+              <div className="flex items-center justify-between pt-3">
+                <span className="text-sm text-gray-700">Outside District</span>
+
+                <span className="font-bold text-[#03373d]">
+                  Base ৳170 + ৳40/kg + ৳40
+                </span>
               </div>
             </div>
 
             {/* Example */}
             <div className="mt-5 rounded-xl bg-gray-50 p-4">
               <p className="text-sm leading-6 text-gray-600">
-                <span className="font-bold text-[#03373d]">Example:</span> If a
-                parcel exceeds 3kg, an additional
-                <span className="font-bold text-[#03373d]">
-                  {" "}
-                  ৳40 per kg
-                </span>{" "}
-                will be added.
+                <span className="font-bold text-[#03373d]">Example:</span> A 4kg
+                parcel costs{" "}
+                <span className="font-bold text-[#03373d]">৳170</span> within
+                the same district and{" "}
+                <span className="font-bold text-[#03373d]">৳250</span> outside
+                the district.
               </p>
             </div>
           </div>
@@ -223,11 +234,11 @@ const Pricing = () => {
                   </th>
 
                   <th className="px-5 py-4 text-center text-sm font-bold sm:text-base">
-                    Within City
+                    Same District
                   </th>
 
                   <th className="px-5 py-4 text-center text-sm font-bold sm:text-base">
-                    Outside City / District
+                    Outside District
                   </th>
                 </tr>
               </thead>
@@ -243,6 +254,7 @@ const Pricing = () => {
 
                       <div>
                         <p className="font-bold text-[#03373d]">Document</p>
+
                         <p className="text-xs text-gray-500">
                           Papers & documents
                         </p>
@@ -256,13 +268,13 @@ const Pricing = () => {
 
                   <td className="px-5 py-5 text-center">
                     <span className="rounded-full bg-green-100 px-4 py-2 font-bold text-green-700">
-                      ৳60
+                      ৳80
                     </span>
                   </td>
 
                   <td className="px-5 py-5 text-center">
                     <span className="rounded-full bg-blue-100 px-4 py-2 font-bold text-blue-700">
-                      ৳80
+                      ৳100
                     </span>
                   </td>
                 </tr>
@@ -277,6 +289,7 @@ const Pricing = () => {
 
                       <div>
                         <p className="font-bold text-[#03373d]">Non-Document</p>
+
                         <p className="text-xs text-gray-500">Regular parcel</p>
                       </div>
                     </div>
@@ -288,13 +301,13 @@ const Pricing = () => {
 
                   <td className="px-5 py-5 text-center">
                     <span className="rounded-full bg-green-100 px-4 py-2 font-bold text-green-700">
-                      ৳110
+                      ৳130
                     </span>
                   </td>
 
                   <td className="px-5 py-5 text-center">
                     <span className="rounded-full bg-blue-100 px-4 py-2 font-bold text-blue-700">
-                      ৳150
+                      ৳170
                     </span>
                   </td>
                 </tr>
@@ -309,6 +322,7 @@ const Pricing = () => {
 
                       <div>
                         <p className="font-bold text-[#03373d]">Non-Document</p>
+
                         <p className="text-xs text-gray-500">Heavy parcel</p>
                       </div>
                     </div>
@@ -319,19 +333,25 @@ const Pricing = () => {
                   </td>
 
                   <td className="px-5 py-5 text-center">
-                    <span className="rounded-full bg-orange-100 px-4 py-2 font-bold text-orange-700">
-                      +৳40/kg
-                    </span>
+                    <div className="flex flex-col items-center gap-1">
+                      <span className="rounded-full bg-orange-100 px-4 py-2 font-bold text-orange-700">
+                        ৳130 + ৳40/kg
+                      </span>
+
+                      <span className="text-xs font-medium text-gray-500">
+                        Extra weight
+                      </span>
+                    </div>
                   </td>
 
                   <td className="px-5 py-5 text-center">
                     <div className="flex flex-col items-center gap-1">
                       <span className="rounded-full bg-orange-100 px-4 py-2 font-bold text-orange-700">
-                        +৳40/kg
+                        ৳170 + ৳40/kg
                       </span>
 
                       <span className="text-xs font-medium text-gray-500">
-                        +৳40 extra
+                        +৳40 outside charge
                       </span>
                     </div>
                   </td>
@@ -378,7 +398,7 @@ const Pricing = () => {
 
               <p className="text-sm leading-6 text-white/70">
                 Non-document parcels up to 3kg have a fixed price. Parcels above
-                3kg include an additional weight charge.
+                3kg include an additional ৳40 charge for every extra kg.
               </p>
             </div>
 
@@ -391,8 +411,8 @@ const Pricing = () => {
               <h4 className="mb-2 text-lg font-bold">Choose Destination</h4>
 
               <p className="text-sm leading-6 text-white/70">
-                Delivery within the city has a lower charge, while outside-city
-                or district delivery has an additional charge.
+                Same-district delivery has a lower base charge, while
+                outside-district delivery includes an additional ৳40 charge.
               </p>
             </div>
           </div>
@@ -409,7 +429,7 @@ const Pricing = () => {
 
               <div>
                 <h4 className="font-bold text-[#03373d]">
-                  Within City Example
+                  Same District Example
                 </h4>
 
                 <p className="text-xs text-gray-500">Non-document parcel</p>
@@ -426,7 +446,7 @@ const Pricing = () => {
               <div className="flex justify-between border-b pb-3">
                 <span className="text-gray-600">Delivery location</span>
 
-                <span className="font-semibold">Within City</span>
+                <span className="font-semibold">Same District</span>
               </div>
 
               <div className="flex justify-between pt-1">
@@ -434,7 +454,7 @@ const Pricing = () => {
                   Delivery Charge
                 </span>
 
-                <span className="text-xl font-bold text-green-600">৳110</span>
+                <span className="text-xl font-bold text-green-600">৳130</span>
               </div>
             </div>
           </div>
@@ -451,9 +471,7 @@ const Pricing = () => {
                   Extra Weight Example
                 </h4>
 
-                <p className="text-xs text-gray-500">
-                  Non-document parcel above 3kg
-                </p>
+                <p className="text-xs text-gray-500">4kg non-document parcel</p>
               </div>
             </div>
 
@@ -465,15 +483,23 @@ const Pricing = () => {
               </div>
 
               <div className="flex justify-between border-b pb-3">
-                <span className="text-gray-600">Extra weight charge</span>
+                <span className="text-gray-600">Extra weight</span>
 
-                <span className="font-semibold">+৳40 / kg</span>
+                <span className="font-semibold">1kg × ৳40</span>
+              </div>
+
+              <div className="flex justify-between border-b pb-3">
+                <span className="text-gray-600">Same District</span>
+
+                <span className="font-semibold">৳130 + ৳40</span>
               </div>
 
               <div className="flex justify-between pt-1">
-                <span className="font-bold text-[#03373d]">Outside City</span>
+                <span className="font-bold text-[#03373d]">
+                  Delivery Charge
+                </span>
 
-                <span className="font-bold text-orange-600">+৳40 extra</span>
+                <span className="text-xl font-bold text-orange-600">৳170</span>
               </div>
             </div>
           </div>
@@ -491,10 +517,11 @@ const Pricing = () => {
             </h4>
 
             <p className="text-sm leading-6 text-gray-700">
-              Document delivery is charged at a fixed rate regardless of weight.
-              Non-document parcels up to 3kg follow the standard pricing. For
-              parcels above 3kg, an additional ৳40 per kg applies. Outside
-              City/District delivery also includes the applicable additional ৳40
+              Document delivery is charged at a fixed rate of ৳80 for the same
+              district and ৳100 for outside districts. Non-document parcels up
+              to 3kg cost ৳130 within the same district and ৳170 outside the
+              district. For parcels above 3kg, an additional ৳40 per extra kg
+              applies. Outside-district delivery also includes an additional ৳40
               charge.
             </p>
           </div>

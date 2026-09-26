@@ -10,11 +10,18 @@ const AssignedDeliveries = () => {
   const axiosSecure = useAxiosSecure();
 
   const { data: parcels = [], refetch } = useQuery({
-    queryKey: ["parcels", user.email],
+    queryKey: ["parcels", user?.email],
+    enabled: !!user?.email,
+
     queryFn: async () => {
+      console.log("Logged in user:", user);
+      console.log("Rider email:", user.email);
+
       const res = await axiosSecure.get(
         `/parcels/rider?riderEmail=${user.email}`,
       );
+
+      console.log("Rider API response:", res.data);
 
       return res.data;
     },
@@ -82,12 +89,17 @@ const AssignedDeliveries = () => {
                 <td>{parcel.parcelName}</td>
 
                 {/* Confirm */}
+                {/* Confirm */}
                 <td>
                   {parcel.deliveryStatus === "rider_rejected" ? (
                     <span className="badge badge-error text-white p-3">
                       Rejected
                     </span>
-                  ) : parcel.deliveryStatus === "rider_arriving" ? (
+                  ) : [
+                      "rider_arriving",
+                      "parcel_picked_up",
+                      "parcel_delivered",
+                    ].includes(parcel.deliveryStatus) ? (
                     <span className="badge badge-success text-white p-3">
                       Accepted
                     </span>
@@ -113,7 +125,6 @@ const AssignedDeliveries = () => {
                     </>
                   )}
                 </td>
-
                 {/* Other Actions - আগের functionality */}
                 <td>
                   {parcel.deliveryStatus === "rider_rejected" ? (

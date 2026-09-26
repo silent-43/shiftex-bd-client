@@ -27,6 +27,7 @@ import AssignedDeliveries from "../pages/Dashboard/AssignedDeliveries/AssignedDe
 import CompletedDeliveries from "../pages/Dashboard/CompletedDeliveries/CompletedDeliveries";
 import RejectedDeliveries from "../pages/Dashboard/RejectedDeliveries/RejectedDeliveries";
 import ParcelTrack from "../pages/ParcelTrack/ParcelTrack";
+import MyProfile from "../pages/Dashboard/MyProfile/MyProfile";
 
 export const router = createBrowserRouter([
   //normal
@@ -129,6 +130,10 @@ export const router = createBrowserRouter([
       {
         path: "dashboard-home",
         Component: DashboardHome,
+      },
+      {
+        path: "profile",
+        Component: MyProfile,
       },
 
       //=========================================================================

@@ -25,6 +25,7 @@ const ApproveRiders = () => {
     };
 
     axiosSecure.patch(`/riders/${rider._id}`, updatedInfo).then((res) => {
+      console.log("Approval response:", res.data);
       if (res.data.modifiedCount) {
         refetch();
 

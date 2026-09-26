@@ -10,37 +10,51 @@ const AssignRiders = () => {
   const riderModalRef = useRef();
   const [selectedParcel, setSelectedParcel] = useState(null);
 
+  // Get pending pickup parcels
   const { data: parcels = [], refetch: parcelsRefetch } = useQuery({
     queryKey: ["parcels", "pending_pickup"],
     queryFn: async () => {
       const res = await axiosSecure.get(
         "/parcels?deliveryStatus=pending_pickup",
       );
+
       return res.data;
     },
   });
 
+  // Get available riders based on parcel pickup district
   const { data: riders = [] } = useQuery({
     queryKey: ["riders", selectedParcel?.senderDistrict, "available"],
-    enabled: !!selectedParcel,
+    enabled: !!selectedParcel?.senderDistrict,
+
     queryFn: async () => {
-      console.log("District:", selectedParcel?.senderDistrict);
+      console.log("Pickup District:", selectedParcel?.senderDistrict);
 
       const res = await axiosSecure.get(
-        `/riders?status=approved&district=${selectedParcel?.senderDistrict}&workStatus=available`,
+        `/riders?status=approved&district=${selectedParcel.senderDistrict}&workStatus=available`,
       );
+
+      console.log("Available Riders:", res.data);
 
       return res.data;
     },
   });
 
+  // Open rider assignment modal
   const openAssignRiderModal = (parcel) => {
+    console.log("Selected Parcel:", parcel);
+
     setSelectedParcel(parcel);
-    // console.log(parcel.senderDistrict);
+
     riderModalRef.current.showModal();
   };
 
+  // Assign selected rider to parcel
   const handleAssignRider = (rider) => {
+    if (!selectedParcel) {
+      return;
+    }
+
     const riderAssignInfo = {
       riderId: rider._id,
       riderName: rider.riderName,
@@ -49,16 +63,20 @@ const AssignRiders = () => {
       trackingId: selectedParcel.trackingId,
     };
 
+    console.log("Assigning Rider:", riderAssignInfo);
+
     axiosSecure
       .patch(`/parcels/${selectedParcel._id}`, riderAssignInfo)
       .then((res) => {
-        if (res.data.result.modifiedCount) {
+        console.log("Assign Rider Response:", res.data);
+
+        if (res.data?.result?.modifiedCount > 0) {
           riderModalRef.current.close();
 
-          // Refetch pending pickup parcels
+          // Refresh pending parcels
           parcelsRefetch();
 
-          // Invalidate available riders query
+          // Refresh available riders
           queryClient.invalidateQueries({
             queryKey: ["riders", selectedParcel.senderDistrict, "available"],
           });
@@ -70,17 +88,31 @@ const AssignRiders = () => {
             showConfirmButton: false,
             timer: 1500,
           });
+        } else {
+          Swal.fire({
+            icon: "warning",
+            title: "Assignment Failed",
+            text: "The rider could not be assigned.",
+          });
         }
+      })
+      .catch((error) => {
+        console.error("Assign Rider Error:", error);
+
+        Swal.fire({
+          icon: "error",
+          title: "Something went wrong",
+          text: "Failed to assign rider.",
+        });
       });
   };
 
   return (
     <div>
-      <h2 className="text-5xl">Assign Riders : {parcels.length}</h2>
+      <h2 className="text-5xl mb-6">Assign Riders : {parcels.length}</h2>
 
       <div className="overflow-x-auto">
         <table className="table table-zebra">
-          {/* head */}
           <thead>
             <tr>
               <th></th>
@@ -119,16 +151,16 @@ const AssignRiders = () => {
         </table>
       </div>
 
+      {/* Rider Assignment Modal */}
       <dialog
         ref={riderModalRef}
         className="modal modal-bottom sm:modal-middle"
       >
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Riders : {riders.length}</h3>
+          <h3 className="font-bold text-lg mb-4">Riders : {riders.length}</h3>
 
           <div className="overflow-x-auto">
             <table className="table table-zebra">
-              {/* head */}
               <thead>
                 <tr>
                   <th></th>
@@ -163,7 +195,6 @@ const AssignRiders = () => {
 
           <div className="modal-action">
             <form method="dialog">
-              {/* if there is a button in form, it will close the modal */}
               <button className="btn">Close</button>
             </form>
           </div>

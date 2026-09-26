@@ -20,6 +20,7 @@ import { SiGoogletasks } from "react-icons/si";
 const DashboardLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const { role } = useRole();
+  console.log("Dashboard Role:", role);
 
   // ============================== Sidebar NavLink Animation ==============================
   const navLinkClass = ({ isActive }) =>
@@ -292,11 +293,11 @@ const DashboardLayout = () => {
                   </>
                 )}
 
-                {/* Settings */}
+                {/* My Profile */}
                 <li>
                   <NavLink
-                    to="/dashboard/settings"
-                    title={!isSidebarOpen ? "Settings" : ""}
+                    to="/dashboard/profile"
+                    title={!isSidebarOpen ? "My Profile" : ""}
                     className={`${navLinkClass} ${
                       !isSidebarOpen ? "justify-center" : ""
                     }`}
@@ -305,7 +306,7 @@ const DashboardLayout = () => {
                       <FaUser />
                     </span>
 
-                    {isSidebarOpen && <span>Settings</span>}
+                    {isSidebarOpen && <span>My Profile</span>}
                   </NavLink>
                 </li>
               </ul>

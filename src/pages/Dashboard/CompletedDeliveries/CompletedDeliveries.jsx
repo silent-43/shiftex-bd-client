@@ -8,11 +8,14 @@ const CompletedDeliveries = () => {
   const axiosSecure = useAxiosSecure();
 
   const { data: parcels = [] } = useQuery({
-    queryKey: ["parcels", user.email, "driver_assigned"],
+    queryKey: ["parcels", user?.email, "parcel_delivered"],
+    enabled: !!user?.email,
+
     queryFn: async () => {
       const res = await axiosSecure.get(
         `/parcels/rider?riderEmail=${user.email}&deliveryStatus=parcel_delivered`,
       );
+
       return res.data;
     },
   });
@@ -54,8 +57,10 @@ const CompletedDeliveries = () => {
                 <td>{parcel.createdAt}</td>
 
                 <td>{parcel.senderDistrict}</td>
+
                 <td>{parcel.cost}</td>
-                <td>{calculatePayout(parcel)}</td>
+
+                <td>{Math.round(calculatePayout(parcel))}</td>
 
                 <td>
                   <button className="btn btn-primary text-black">
