@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
-import { useLoaderData } from "react-router";
+import { Link, useLoaderData } from "react-router";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { FiEdit } from "react-icons/fi";
@@ -103,7 +103,7 @@ const MyParcels = () => {
     // ==========================================================
 
     if (parcelType === "document") {
-      return isSameDistrict ? 60 : 80;
+      return isSameDistrict ? 80 : 100;
     }
 
     // ==========================================================
@@ -113,13 +113,13 @@ const MyParcels = () => {
     if (parcelType === "non-document") {
       // Up to 3 KG
       if (weight <= 3) {
-        return isSameDistrict ? 110 : 150;
+        return isSameDistrict ? 130 : 170;
       }
 
       // More than 3 KG
       const extraWeight = weight - 3;
 
-      const minCharge = isSameDistrict ? 110 : 150;
+      const minCharge = isSameDistrict ? 130 : 170;
 
       const extraCharge = isSameDistrict
         ? extraWeight * 40
@@ -185,10 +185,11 @@ const MyParcels = () => {
         parcelId: parcel._id,
         senderEmail: parcel.senderEmail,
         parcelName: parcel.parcelName,
+        trackingId: parcel.trackingId,
       };
 
       const res = await axiosSecure.post(
-        "/create-checkout-session",
+        "/payment-checkout-session",
         paymentInfo,
       );
 
@@ -400,7 +401,7 @@ const MyParcels = () => {
         updatedParcel,
       );
 
-      if (res.data.modifiedCount) {
+      if (res.data.result?.modifiedCount) {
         await refetch();
 
         closeModal();
@@ -529,22 +530,39 @@ const MyParcels = () => {
             ====================================================== */}
 
             <div className="overflow-x-auto">
-              <table className="table">
+              <table className="table table-sm w-full">
                 <thead>
                   <tr className="bg-gray-50 text-gray-600">
-                    <th className="font-semibold">#</th>
+                    <th className="font-semibold whitespace-nowrap px-2">#</th>
 
-                    <th className="font-semibold">Parcel Name</th>
+                    <th className="font-semibold whitespace-nowrap px-2">
+                      Parcel Name
+                    </th>
 
-                    <th className="font-semibold">Weight</th>
+                    <th className="font-semibold whitespace-nowrap px-2">
+                      Weight
+                    </th>
 
-                    <th className="font-semibold">Cost</th>
+                    <th className="font-semibold whitespace-nowrap px-2">
+                      Cost
+                    </th>
 
-                    <th className="font-semibold">Payment Status</th>
+                    <th className="font-semibold whitespace-nowrap px-2">
+                      Payment Status
+                    </th>
 
-                    <th className="font-semibold">Delivery Status</th>
+                    <th className="font-semibold whitespace-nowrap px-2">
+                      Tracking Id
+                    </th>
 
-                    <th className="font-semibold text-center">Actions</th>
+                    <th className="font-semibold whitespace-nowrap px-2">
+                      Delivery Status
+                    </th>
+
+                    {/* Sticky Actions */}
+                    <th className="font-semibold text-center whitespace-nowrap px-2 sticky right-0 bg-gray-50 z-20">
+                      Actions
+                    </th>
                   </tr>
                 </thead>
 
@@ -556,7 +574,7 @@ const MyParcels = () => {
                     >
                       {/* Serial */}
 
-                      <th>
+                      <th className="px-2">
                         <span className="flex items-center justify-center w-8 h-8 rounded-full bg-[#03373d] text-white text-sm">
                           {index + 1}
                         </span>
@@ -564,14 +582,14 @@ const MyParcels = () => {
 
                       {/* Parcel Name */}
 
-                      <td>
-                        <div className="flex items-center gap-3">
-                          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-100 text-blue-600">
+                      <td className="px-2">
+                        <div className="flex items-center gap-2 min-w-[150px]">
+                          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-blue-100 text-blue-600">
                             <FaBoxOpen />
                           </div>
 
-                          <div>
-                            <p className="font-semibold text-[#03373d]">
+                          <div className="min-w-0">
+                            <p className="font-semibold text-[#03373d] truncate max-w-[130px]">
                               {parcel.parcelName}
                             </p>
 
@@ -584,8 +602,8 @@ const MyParcels = () => {
 
                       {/* Weight */}
 
-                      <td>
-                        <span className="inline-flex items-center gap-1 rounded-full bg-purple-100 px-3 py-1.5 text-sm font-semibold text-purple-700">
+                      <td className="px-2">
+                        <span className="inline-flex items-center gap-1 rounded-full bg-purple-100 px-2.5 py-1.5 text-xs font-semibold text-purple-700 whitespace-nowrap">
                           <FaWeightHanging />
                           {parcel.parcelWeight} Kg
                         </span>
@@ -593,28 +611,28 @@ const MyParcels = () => {
 
                       {/* Cost */}
 
-                      <td>
-                        <span className="inline-flex items-center gap-1 rounded-full bg-orange-100 px-3 py-1.5 font-bold text-orange-700">
+                      <td className="px-2">
+                        <span className="inline-flex items-center gap-1 rounded-full bg-orange-100 px-2.5 py-1.5 text-xs font-bold text-orange-700 whitespace-nowrap">
                           <FaMoneyBillWave />৳{parcel.cost}
                         </span>
                       </td>
 
                       {/* Payment Status */}
 
-                      <td>
+                      <td className="px-2">
                         {parcel.paymentStatus === "paid" ? (
-                          <span className="inline-flex items-center gap-2 rounded-full bg-green-100 px-4 py-2 font-bold text-green-700 border border-green-200">
+                          <span className="inline-flex items-center gap-1.5 rounded-full bg-green-100 px-3 py-1.5 text-xs font-bold text-green-700 border border-green-200 whitespace-nowrap">
                             <FaCreditCard />
                             Paid
                           </span>
                         ) : (
                           <button
                             onClick={() => handlePayment(parcel)}
-                            className="btn btn-sm bg-[#CAEB66] text-[#03373d] border-none font-bold
-                            transition-all duration-300
-                            hover:bg-[#03373d] hover:text-white
-                            hover:scale-105 hover:shadow-lg
-                            active:scale-95"
+                            className="btn btn-xs bg-[#CAEB66] text-[#03373d] border-none font-bold
+                transition-all duration-300
+                hover:bg-[#03373d] hover:text-white
+                hover:scale-105 hover:shadow-lg
+                active:scale-95 whitespace-nowrap"
                           >
                             <FaCreditCard />
                             Pay Now
@@ -622,20 +640,46 @@ const MyParcels = () => {
                         )}
                       </td>
 
+                      {/* Tracking ID */}
+
+                      <td className="px-2">
+                        <div className="max-w-[145px]">
+                          <Link
+                            to={`/parcel-track/${parcel.trackingId}`}
+                            className="block"
+                          >
+                            <span className="inline-flex items-center gap-1 rounded-full bg-purple-100 px-2.5 py-1.5 text-xs font-semibold text-purple-700 whitespace-nowrap">
+                              <FaTruck />
+
+                              <span className="text-[#03373d] font-bold">
+                                Details
+                              </span>
+                            </span>
+
+                            <p
+                              className="text-xs font-semibold text-gray-600 mt-1 truncate"
+                              title={parcel.trackingId}
+                            >
+                              {parcel.trackingId || "N/A"}
+                            </p>
+                          </Link>
+                        </div>
+                      </td>
+
                       {/* Delivery Status */}
 
-                      <td>
+                      <td className="px-2">
                         <span
-                          className={`inline-flex items-center rounded-full px-3 py-1.5 text-sm font-semibold capitalize
-                          ${
-                            parcel.deliveryStatus === "delivered"
-                              ? "bg-green-100 text-green-700"
-                              : parcel.deliveryStatus === "in-transit"
-                                ? "bg-blue-100 text-blue-700"
-                                : parcel.deliveryStatus === "cancelled"
-                                  ? "bg-red-100 text-red-700"
-                                  : "bg-yellow-100 text-yellow-700"
-                          }`}
+                          className={`inline-flex items-center rounded-full px-2.5 py-1.5 text-xs font-semibold capitalize whitespace-nowrap
+              ${
+                parcel.deliveryStatus === "delivered"
+                  ? "bg-green-100 text-green-700"
+                  : parcel.deliveryStatus === "in-transit"
+                    ? "bg-blue-100 text-blue-700"
+                    : parcel.deliveryStatus === "cancelled"
+                      ? "bg-red-100 text-red-700"
+                      : "bg-yellow-100 text-yellow-700"
+              }`}
                         >
                           {parcel.deliveryStatus || "pending"}
                         </span>
@@ -643,8 +687,8 @@ const MyParcels = () => {
 
                       {/* Actions */}
 
-                      <td>
-                        <div className="flex items-center justify-center gap-2">
+                      <td className="px-2 sticky right-0 bg-base-100 z-10">
+                        <div className="flex items-center justify-center gap-1.5">
                           {/* Edit */}
 
                           <button
@@ -681,7 +725,6 @@ const MyParcels = () => {
                 </tbody>
               </table>
             </div>
-
             {/* ======================================================
                 Empty State
             ====================================================== */}
@@ -1282,7 +1325,7 @@ const MyParcels = () => {
                         onChange={(e) => {
                           setEditSenderRegion(e.target.value);
 
-                          // Region change হলে district reset
+                          // if Region change -> district reset
                           setEditSenderDistrict("");
                         }}
                         className="select select-bordered w-full bg-white"
@@ -1439,7 +1482,7 @@ const MyParcels = () => {
                         onChange={(e) => {
                           setEditReceiverRegion(e.target.value);
 
-                          // Region change হলে district reset
+                          // if Region change ->  district reset
                           setEditReceiverDistrict("");
                         }}
                         className="select select-bordered w-full bg-white"

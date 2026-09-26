@@ -65,13 +65,13 @@ const NavBar = () => {
               </button>
 
               {/* Logo */}
-              <Link
-                to="/"
+              {/* Logo */}
+              <div
                 onClick={closeMobileMenu}
                 className="transition-transform duration-300 hover:scale-105"
               >
                 <Logo />
-              </Link>
+              </div>
             </div>
 
             {/* ============================ Desktop Navigation ============================ */}

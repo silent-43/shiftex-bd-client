@@ -123,12 +123,13 @@ const ApproveRiders = () => {
             {/* ================= Table Head ================= */}
             <thead>
               <tr className="bg-gray-50 text-gray-600">
-                <th className="font-semibold">#</th>
-                <th className="font-semibold">Name</th>
-                <th className="font-semibold">Email</th>
-                <th className="font-semibold">District</th>
-                <th className="font-semibold">Status</th>
-                <th className="font-semibold text-center">Actions</th>
+                <th className="font-bold">#</th>
+                <th className="font-bold">Name</th>
+                <th className="font-bold">Email</th>
+                <th className="font-bold">District</th>
+                <th className="font-bold">Application Status</th>
+                <th className="font-bold">Work Status</th>
+                <th className="font-bold text-center">Actions</th>
               </tr>
             </thead>
 
@@ -189,6 +190,7 @@ const ApproveRiders = () => {
                       {rider.status}
                     </span>
                   </td>
+                  <td>{rider.workStatus}</td>
 
                   {/* Actions */}
                   <td>

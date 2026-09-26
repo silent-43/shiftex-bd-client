@@ -30,7 +30,10 @@ const Payment = () => {
       senderEmail: parcel.senderEmail,
       parcelName: parcel.parcelName,
     };
-    const res = await axiosSecure.post("/create-checkout-session", paymentInfo);
+    const res = await axiosSecure.post(
+      "/payment-checkout-session",
+      paymentInfo,
+    );
     console.log(res.data);
     // payment same page a dekhanor jonno
     window.location.href = res.data.url;
