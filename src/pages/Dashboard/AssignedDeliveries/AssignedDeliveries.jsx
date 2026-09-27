@@ -56,43 +56,48 @@ const AssignedDeliveries = () => {
   };
 
   return (
-    <div>
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
-        <h2 className="text-4xl md:text-5xl font-bold">
+    <div className="w-full min-w-0">
+      {/* Header */}
+      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-6">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
           Pending Parcel Pickup : {parcels.length}
         </h2>
 
         <Link
           to="/dashboard/rejected-deliveries"
-          className="btn btn-error text-white"
+          className="btn btn-error text-white w-full sm:w-auto shrink-0"
         >
           View Rejected Deliveries
         </Link>
       </div>
 
-      <div className="overflow-x-auto">
-        <table className="table table-zebra">
+      {/* Table */}
+      <div className="w-full overflow-x-auto rounded-lg">
+        <table className="table table-zebra min-w-[850px]">
           <thead>
             <tr>
-              <th></th>
-              <th>Name</th>
-              <th>Confirm</th>
-              <th>Other Actions</th>
+              <th className="w-14">#</th>
+              <th className="min-w-[180px]">Name</th>
+              <th className="min-w-[230px]">Confirm</th>
+              <th className="min-w-[400px]">Other Actions</th>
             </tr>
           </thead>
 
           <tbody>
             {parcels.map((parcel, index) => (
               <tr key={parcel._id}>
+                {/* Serial */}
                 <th>{index + 1}</th>
 
-                <td>{parcel.parcelName}</td>
+                {/* Parcel Name */}
+                <td className="font-medium whitespace-nowrap">
+                  {parcel.parcelName}
+                </td>
 
-                {/* Confirm */}
                 {/* Confirm */}
                 <td>
                   {parcel.deliveryStatus === "rider_rejected" ? (
-                    <span className="badge badge-error text-white p-3">
+                    <span className="badge badge-error text-white p-3 whitespace-nowrap">
                       Rejected
                     </span>
                   ) : [
@@ -100,16 +105,16 @@ const AssignedDeliveries = () => {
                       "parcel_picked_up",
                       "parcel_delivered",
                     ].includes(parcel.deliveryStatus) ? (
-                    <span className="badge badge-success text-white p-3">
+                    <span className="badge badge-success text-white p-3 whitespace-nowrap">
                       Accepted
                     </span>
                   ) : (
-                    <>
+                    <div className="flex flex-wrap gap-2">
                       <button
                         onClick={() =>
                           handleDeliveryStatusUpdate(parcel, "rider_arriving")
                         }
-                        className="btn btn-primary text-black"
+                        className="btn btn-primary btn-sm sm:btn-md text-black whitespace-nowrap"
                       >
                         Accept
                       </button>
@@ -118,42 +123,43 @@ const AssignedDeliveries = () => {
                         onClick={() =>
                           handleDeliveryStatusUpdate(parcel, "rider_rejected")
                         }
-                        className="btn btn-warning ms-2 text-black"
+                        className="btn btn-warning btn-sm sm:btn-md text-black whitespace-nowrap"
                       >
                         Reject
                       </button>
-                    </>
+                    </div>
                   )}
                 </td>
-                {/* Other Actions - আগের functionality */}
+
+                {/* Other Actions */}
                 <td>
                   {parcel.deliveryStatus === "rider_rejected" ? (
                     <Link
                       to="/dashboard/rejected-deliveries"
-                      className="btn btn-error text-white"
+                      className="btn btn-error btn-sm sm:btn-md text-white whitespace-nowrap"
                     >
                       View Rejected
                     </Link>
                   ) : (
-                    <>
+                    <div className="flex flex-wrap gap-2">
                       <button
                         onClick={() =>
                           handleDeliveryStatusUpdate(parcel, "parcel_picked_up")
                         }
-                        className="btn btn-primary text-black"
+                        className="btn btn-primary btn-sm sm:btn-md text-black whitespace-nowrap"
                       >
-                        Marked as Picked Up
+                        Mark as Picked Up
                       </button>
 
                       <button
                         onClick={() =>
                           handleDeliveryStatusUpdate(parcel, "parcel_delivered")
                         }
-                        className="btn btn-primary text-black mx-2"
+                        className="btn btn-primary btn-sm sm:btn-md text-black whitespace-nowrap"
                       >
-                        Marked as Delivered
+                        Mark as Delivered
                       </button>
-                    </>
+                    </div>
                   )}
                 </td>
               </tr>
