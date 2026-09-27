@@ -239,7 +239,13 @@ const NavBar = () => {
                 </NavLink>
               </li>
 
-              {/* Send Parcel */}
+              {/* Be a Rider */}
+              <li>
+                <NavLink to="/rider" className={navLinkClass}>
+                  Be a Rider
+                </NavLink>
+              </li>
+              {/* Send Parcel  */}
               <li>
                 <NavLink to="/send-parcel" className={navLinkClass}>
                   Send Parcel
@@ -291,10 +297,7 @@ const NavBar = () => {
 
                   {/* My Dashboard */}
                   <li>
-                    <NavLink
-                      to="/dashboard/dashboard-home"
-                      className={navLinkClass}
-                    >
+                    <NavLink to="/dashboard" className={navLinkClass}>
                       My Dashboard
                     </NavLink>
                   </li>
@@ -364,6 +367,16 @@ const NavBar = () => {
                 </NavLink>
               </li>
 
+              {/* Be a Rider */}
+              <li>
+                <NavLink
+                  to="/rider"
+                  onClick={closeMobileMenu}
+                  className={mobileNavLinkClass}
+                >
+                  Be a Rider
+                </NavLink>
+              </li>
               {/* Send Parcel */}
               <li>
                 <NavLink

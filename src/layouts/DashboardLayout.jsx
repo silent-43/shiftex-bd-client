@@ -142,7 +142,7 @@ const DashboardLayout = () => {
                 {/* Dashboard */}
                 <li>
                   <NavLink
-                    to="/dashboard/dashboard-home"
+                    to="/dashboard"
                     title={!isSidebarOpen ? "Dashboard" : ""}
                     className={`${navLinkClass} ${
                       !isSidebarOpen ? "justify-center" : ""

@@ -107,6 +107,10 @@ export const router = createBrowserRouter([
     ),
     children: [
       {
+        index: true,
+        Component: DashboardHome,
+      },
+      {
         path: "my-parcels",
         Component: MyParcels,
         loader: () => fetch("/serviceCenter.json").then((res) => res.json()),
@@ -126,10 +130,6 @@ export const router = createBrowserRouter([
       {
         path: "payment-cancelled",
         Component: PaymentCancel,
-      },
-      {
-        path: "dashboard-home",
-        Component: DashboardHome,
       },
       {
         path: "profile",
